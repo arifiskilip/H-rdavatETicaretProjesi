@@ -1,0 +1,139 @@
+﻿@model ProducutListPageModel
+
+@{
+    TempData["Title"] = "Ürünler";
+}
+<section id="slider-sec" class="slider-sec parallax" style="background: url('/E-Ticaret/images/urunler.jpg');">
+    <div class="overlay text-center d-flex justify-content-center align-items-center">
+        <div class="slide-contain">
+        </div>
+    </div>
+</section>
+<div class="product-listing mt-5">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12 col-lg-4 order-2 order-lg-1 sticky">
+                <div id="product-filter-nav" class="product-filter-nav mb-3">
+                    <div class="product-category">
+                        <h5 class="filter-heading  text-center text-lg-left">Kategori</h5>
+                        <ul>
+                            @if (Model.CategoryResult.Succes)
+                            {
+                                @foreach (var item in Model.CategoryResult.Data)
+                                {
+                                    <li><a href="/Urun/Kategori/@item">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.KategoriId == item.Id).Count())</span></li>
+                                }
+                            }
+                            else if (Model.CategoryResult.Data.Count() == 0)
+                            {
+                                <div class="alert alert-warning">Mevcut Kategori Bulunmamaktadır.</div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger">@Model.CategoryResult.Message</div>
+                            }
+
+                        </ul>
+                    </div>
+                    <div class="product-price mt-5">
+                        <h5 class="filter-heading">Marka</h5>
+                        <input class="form-control mr-sm-2" style="border-radius:15px;" type="search" placeholder="Marka Adı" aria-label="Ara">
+                        <div class="product-category">
+                            <ul>
+                                @if (Model.BrandResult.Succes)
+                                {
+                                    @foreach (var item in Model.BrandResult.Data)
+                                    {
+                                        <li><a href="/Urun/Marka/@item.Id">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.MarkaId == item.Id).Count())</span></li>
+                                    }
+                                }
+                                else if (Model.BrandResult.Data.Count() == 0)
+                                {
+                                    <div class="alert alert-warning">Mevcut Marka Bulunmamaktadır.</div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-danger">@Model.BrandResult.Message</div>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <a href="/Urun"> <button class="btn web-btn rounded-pill mt-5 " style="display: flex; text-align: center;justify-content: center; width: 170px;">Filtreyi Temizle</button></a>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-8 order-1 order-lg-2">
+                <div class="row">
+                    <div class="col-12 product-listing-products">
+                        <section class="featured-items padding-bottom" id="featured-items">
+                            <div class="row">
+                                @if (Model.ProductResult.Succes)
+                                {
+                                    @foreach (var item in Model.ProductResult.Data)
+                                    {
+                                        <div class="col-4 col-md-6 col-lg-4 col-sm-3 text-center wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
+                                            <div class="featured-item-card">
+                                                <div class="item-img">
+                                                    <img src="~/E-Ticaret/images/urun1.jpg">
+                                                    <div class="item-overlay">
+                                                        <div class="item-btns">
+                                                            <a href="#" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
+
+                                                            <a href="files/product-detail.html" class="btn btn-view"><i class="las la-plus"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-detail">
+                                                    <h4 class="item-name mb-1">@item.Ad</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <div style="text-align: start; white-space: nowrap;">
+                                                                <p class="acikrenk">Ürün Kodu: @item.Kod <br> Marka: @Model.BrandResult.Data.SingleOrDefault(x=> x.Id == item.Id).Ad<br>İskonto:%5<br>Stok durumu: @item.StokDurum <br>@item.ListeFiyat ₺  </p>
+                                                                <ul class="reviews" style="padding-top: 0px!important;">
+                                                                    <li><i class="las la-star"></i></li>
+                                                                    <li><i class="las la-star"></i></li>
+                                                                    <li><i class="las la-star"></i></li>
+                                                                    <li><i class="las la-star"></i></li>
+                                                                    <li><i class="las la-star"></i></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="row justify-content-center mt-3">
+                                                        <a href="/Urun/Detay/@item.Id">
+                                                            <button class="btn btn-primary" style="background-color: #189c97; border-color: #189c97;">
+                                                                Ürünü
+                                                                İncele
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else if (Model.ProductResult.Data.Count() == 0)
+                                {
+                                    <div class="alert alert-warning">Mevcut Ürün Bulunmamaktadır.</div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-danger">@Model.BrandResult.Message</div>
+                                }
+
+                            </div>
+
+                        </section>
+                        <!--featured item sec end-->
+                    </div>
+                    <!-- END PRODUCT LISTING SECTION -->
+                </div>
+            </div>
+            <!-- END PRODUCT COL 8 -->
+        </div>
+    </div>
+</div>

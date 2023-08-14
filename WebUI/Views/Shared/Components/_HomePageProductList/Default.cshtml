@@ -1,0 +1,171 @@
+﻿@using Entities.Concrete;
+@model List<Urun>
+<section class="featured-items padding-top padding-bottom" id="featured-items">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="heading-details mb-0">
+                    <h4 class="heading">ÜRÜNLER</h4>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 text-center mb-4">
+                <p class="text">
+                    Lorem ipsum is simply dummy text of the printing and type setting has been the
+                    industry.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            @if (Model.Count <= 6)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 col-md-6 col-lg-4 text-center wow slideInUp">
+                        <div class="featured-item-card">
+                            <div class="item-img">
+                                <img src="~/E-Ticaret/images/urun1.jpg">
+                                <div class="item-overlay">
+                                    <div class="item-btns">
+                                        <a href="#" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
+                                        <a href="#" class="btn btn-view"><i class="las la-heart"></i></a>
+                                        <a href="files/product-detail.html" class="btn btn-view">
+                                            <i class="las la-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-detail">
+                                <h4 class="item-name mb-1">@item.Ad</h4>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div style="text-align: start;">
+                                            <p class="acikrenk">
+                                                @if (item.StokDurum == true)
+                                                {
+                                                <p class="acikrenk"> Stok: Var</p>
+                                                }
+                                                else
+                                                {
+                                                <p class="acikrenk"> Stok: Yok</p>
+                                                }
+                                                <br> Liste Fiyatı: @item.ListeFiyat ₺</p>
+                                            <ul class="reviews" style="padding-top: 0px!important;">
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div style="text-align: end;">
+                                            <p class="item-price" style="font-size: 25px;">
+                                                <span class="acikrenk"
+                                              style="font-size: 14px;">İndirimli Fiyat</span> <br> 9,99 ₺
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center mt-3">
+                                    <a href="/Urun/Detay/@item.Id">
+                                        <button class="btn btn-primary"
+                                        style="background-color: #189c97; border-color: #189c97;">
+                                            Ürünü
+                                            İncele
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else if (Model.Count > 6)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+
+                    <div class="col-12 col-md-6 col-lg-4 text-center wow slideInUp">
+                        <div class="featured-item-card">
+                            <div class="item-img">
+                                <img src="~/E-Ticaret/images/urun1.jpg">
+                                <div class="item-overlay">
+                                    <div class="item-btns">
+                                        <a href="#" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
+                                        <a href="#" class="btn btn-view"><i class="las la-heart"></i></a>
+                                        <a href="files/product-detail.html" class="btn btn-view">
+                                            <i class="las la-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-detail">
+                                <h4 class="item-name mb-1">@Model[i].Ad</h4>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div style="text-align: start;">
+                                            <p class="acikrenk">
+                                                @if (Model[i].StokDurum == true)
+                                                {
+                                                <p class="acikrenk"> Stok: Var</p>
+                                                }
+                                                else
+                                                {
+                                                <p class="acikrenk"> Stok: Yok</p>
+                                                }
+                                            <br> Liste Fiyatı: @Model[i].ListeFiyat ₺</p>
+                                            <ul class="reviews" style="padding-top: 0px!important;">
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                                <li><i class="las la-star"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div style="text-align: end;">
+                                            <p class="item-price" style="font-size: 25px;">
+                                                <span class="acikrenk"
+                                              style="font-size: 14px;">İndirimli Fiyat</span> <br> 9,99 ₺
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center mt-3">
+                                    <a href="/Urun/Detay/@Model[i].Id">
+                                        <button class="btn btn-primary"
+                                        style="background-color: #189c97; border-color: #189c97;">
+                                            Ürünü
+                                            İncele
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+            else
+            {
+                <div class="alert alert-info"> İlgili ürün bulunamadı. </div>
+            }
+
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <a href="/Urun" class="btn web-btn rounded-pill">
+                    Daha Fazlası <i class="las la-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

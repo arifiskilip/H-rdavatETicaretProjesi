@@ -1,0 +1,35 @@
+.inputt {
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.inputt input[type="file"] {
+    display: none;
+}
+
+.inputt label {
+    color: white;
+    background-color: #17a2b8;
+    width: 57%;
+    max-width: 200px;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+@media screen and (max-width: 480px) {
+    .inputt {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .inputt label {
+        width: 100%;
+        max-width: none;
+    }
+}

@@ -1,0 +1,116 @@
+﻿@{
+    TempData["Title"] = "Ürün Ekle";
+}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-xl-12">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header renk">Ürün Detayları</div>
+                <div class="card-body">
+                    <form>
+                        <!-- Form Row-->
+                        <div class="form-row">
+                            <!-- Form Group (first name)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Ürün Adı</label>
+                                <input class="form-control" id="inputFirstName" type="text" />
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="Kategori">Kategori</label>
+                                <select class="form-control" id="Kategori" style="display:flex;text-align: initial; padding-top: 9px;">
+                                    <option selected>-</option>
+                                    <option>Bahçe Malzemesi</option>
+                                    <option>Yapı Malzemesi</option>
+                                    <option>Yapışkanlar</option>
+                                    <option>Elektrikli Alet</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Form Row        -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Ürün Kodu </label>
+                                <input class="form-control" id="inputFirstName" type="text" />
+                            </div>
+                            <!-- Form Group (organization name)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Marka</label>
+                                <input class="form-control" id="inputOrgName" type="text" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Üretici Firma</label>
+                                <input class="form-control" id="inputOrgName" type="text" />
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="Birim">Stok Durumu</label>
+                                <select class="form-control" id="Birim" style="display:flex;text-align: initial; padding-top: 9px;">
+                                    <option selected>-</option>
+                                    <option>Var</option>
+                                    <option>Yok</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Kutu Adedi</label>
+                                <input class="form-control" id="inputFirstName" type="text" />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">KDV Oranı </label>
+                                <input class="form-control" id="inputFirstName" type="text" />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">KDV'Siz Fiyat </label>
+                                <input class="form-control" id="inputFirstName" type="text" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">İskonto </label>
+                                <input class="form-control" id="inputFirstName" type="text" />
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <!-- Form Group (email address)-->
+                        <div class="form-group">
+                            <label class="small mb-1" for="aciklama">Açıklama</label>
+                            <input class="form-control" id="aciklama" type="text" />
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary renkBtn" type="button">Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     const fileInput = document.getElementById('fileInput');
+    const previewImage = document.getElementById('previewImage');
+
+    fileInput.addEventListener('change', function () {
+        const selectedFile = fileInput.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                previewImage.src = event.target.result;
+                previewImage.style.display = 'block';
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    });
+</script>

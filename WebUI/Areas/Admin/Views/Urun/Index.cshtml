@@ -1,0 +1,63 @@
+﻿@model IDataResult<List<UrunDto>>
+@{
+    TempData["Title"] = "Ürünler";
+}
+
+<div class="card m-5">
+    <div class="card-body">
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kod</th>
+                        <th>Kategori</th>
+                        <th>Marka</th>
+                        <th>Stok Durumu</th>
+                        <th>Liste Fiyatı</th>
+                        <th>Iskonto</th>
+                        <th>Iskonto</th>
+                        <th>Kutu Adet</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Succes)
+                    {
+                        if (Model.Data.Count > 0)
+                        {
+                            @foreach (var item in Model.Data)
+                            {
+                                <tr>
+                                    <td>@item.Ad</td>
+                                    <td>@item.Kod</td>
+                                    <td>@item.KategoriAdi</td>
+                                    <td>@item.MaraAdi</td>
+                                    @if (item.StokDurum==true)
+                                    {
+                                        <td>Var</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Yok</td>
+                                    }
+                                    <td>@item.ListeFiyat ₺</td>
+                                    <td>@item.Iskonto1</td>
+                                    <td>@item.Iskonto2</td>
+                                    <td>@item.KutuAdet</td>
+                                    <td>@Convert.ToDateTime(item.CreateDate).ToShortDateString() </td>
+                                    <td>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+            <a href="/Admin/Urun/Ekle"><button class="btn btn-outline-primary">Ürün Ekle</button></a>
+        </div>
+    </div>
+</div>

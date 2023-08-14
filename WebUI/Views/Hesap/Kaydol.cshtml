@@ -1,0 +1,55 @@
+﻿@model SignUpModel
+@{
+    TempData["Title"] = "Kayıt Ol";
+}
+<div style="visibility:hidden">
+    <div class="row">
+        <h1>asd</h1>
+    </div>
+    <div class="row">
+        <h1>asd</h1>
+    </div>
+</div>
+<section style="margin-top: 200px;">
+    <div class="container">
+        <div class="row" style="justify-content: center; align-items: center; display: flex; flex-direction: column;">
+            <div class="col-12 text-center">
+                <h4 style="font-size: 80px; font-weight: 600; color: #189c97;">Kaydol</h4>
+            </div>
+            <div class="card shadow" style="width: 35rem; border-radius: 50px; border-width: 3px; border-color: #189c97;">
+                <div class="card-body p-5">
+                    <div class="row d-flex flex-column align-content-center mt-5 align-items-center">
+                        <form class="align-content-center d-flex flex-column align-items-center" method="post" asp-action="Kaydol" asp-controller="Hesap">
+                              <div class="form-group">
+                                <label for="firstname">Adınız</label>
+                                <input asp-for="FirstName" type="text" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Arif">
+                            </div>
+                              <div class="form-group">
+                                <label for="lastname">Soyadınız</label>
+                                <input asp-for="LastName" type="text" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="İskilip">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email Adresi</label>
+                                <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Şifre</label>
+                                <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="********">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Şifre Tekrar</label>
+                                <input asp-for="PasswordConfirm" type="password" class="form-control" id="exampleInputPassword1" placeholder="********">
+                            </div>
+
+
+                            <div class="align-content-center d-flex flex-column align-items-center">
+                                <button type="submit" class="btn btn-primary renkBtn mt-3">Kaydol</button>
+                            </div>
+                            <div class="text-alert" asp-validation-summary="All"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
