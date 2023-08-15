@@ -1,4 +1,6 @@
-﻿@{
+﻿@using WebUI.Areas.Admin.Models;
+@model ProductAddModel
+@{
     TempData["Title"] = "Ürün Ekle";
 }
 <div class="container mt-4">
@@ -8,23 +10,19 @@
             <div class="card mb-4">
                 <div class="card-header renk">Ürün Detayları</div>
                 <div class="card-body">
-                    <form>
+                    <form asp-area="Admin" asp-controller="Urun" asp-action="Ekle" method="post">
                         <!-- Form Row-->
                         <div class="form-row">
                             <!-- Form Group (first name)-->
                             <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputFirstName">Ürün Adı</label>
-                                <input class="form-control" id="inputFirstName" type="text" />
+                                <label class="small mb-1"  for="inputFirstName">Ürün Adı</label>
+                                <input class="form-control" asp-for="Ad" id="inputFirstName" type="text" />
                             </div>
                             <!-- Form Group (last name)-->
                             <div class="form-group col-md-6">
                                 <label class="small mb-1" for="Kategori">Kategori</label>
-                                <select class="form-control" id="Kategori" style="display:flex;text-align: initial; padding-top: 9px;">
-                                    <option selected>-</option>
-                                    <option>Bahçe Malzemesi</option>
-                                    <option>Yapı Malzemesi</option>
-                                    <option>Yapışkanlar</option>
-                                    <option>Elektrikli Alet</option>
+                                <select class="form-control" id="Kategori" style="display:flex;text-align: initial; padding-top: 9px;" asp-items="Model.Kategoriler" asp-for="KategoriId">
+                                   
                                 </select>
                             </div>
                         </div>
@@ -33,61 +31,48 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="small mb-1" for="inputFirstName">Ürün Kodu </label>
-                                <input class="form-control" id="inputFirstName" type="text" />
+                                <input class="form-control" asp-for=Kod id="inputFirstName" type="text" />
                             </div>
                             <!-- Form Group (organization name)-->
                             <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputOrgName">Marka</label>
-                                <input class="form-control" id="inputOrgName" type="text" />
+                                <label class="small mb-1" for="brand">Marka</label>
+                                <select class="form-control" id="brand" style="display:flex;text-align: initial; padding-top: 9px;" asp-items="Model.Markalar" asp-for="MarkaId">
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputOrgName">Üretici Firma</label>
-                                <input class="form-control" id="inputOrgName" type="text" />
+                                <label class="small mb-1" for="price">Liste Fiyatı </label>
+                                <input class="form-control" asp-for=ListeFiyat id="price" type="text" />
                             </div>
+                          
                             <!-- Form Group (location)-->
                             <div class="form-group col-md-6">
                                 <label class="small mb-1" for="Birim">Stok Durumu</label>
-                                <select class="form-control" id="Birim" style="display:flex;text-align: initial; padding-top: 9px;">
-                                    <option selected>-</option>
-                                    <option>Var</option>
-                                    <option>Yok</option>
+                                <select class="form-control" id="Birim" asp-for="StokDurum" style="display:flex;text-align: initial; padding-top: 9px;">
+                                    <option value="True" selected>Var</option>
+                                    <option value="False">Yok</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="small mb-1" for="inputFirstName">Kutu Adedi</label>
-                                <input class="form-control" id="inputFirstName" type="text" />
+                                <input class="form-control" asp-for="KutuAdet" id="inputFirstName" type="text" />
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputFirstName">KDV Oranı </label>
-                                <input class="form-control" id="inputFirstName" type="text" />
+                                <label class="small mb-1" for="iskonto1">Iskonto 1</label>
+                                <input class="form-control" asp-for="Iskonto1" id="iskonto1" type="text" />
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputFirstName">KDV'Siz Fiyat </label>
-                                <input class="form-control" id="inputFirstName" type="text" />
+                                <label class="small mb-1" for="iskonto2">Iskonto 2</label>
+                                <input class="form-control" asp-for="Iskonto2" id="iskonto2" type="text" />
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputFirstName">İskonto </label>
-                                <input class="form-control" id="inputFirstName" type="text" />
+                                <label class="small mb-1" for="iskonto3">Iskonto 3</label>
+                                <input class="form-control" asp-for="Iskonto3" id="iskonto3" type="text" />
                             </div>
-
-
-
-
-
-
-
                         </div>
-
-
-                        <!-- Form Group (email address)-->
-                        <div class="form-group">
-                            <label class="small mb-1" for="aciklama">Açıklama</label>
-                            <input class="form-control" id="aciklama" type="text" />
-                        </div>
-                        <!-- Save changes button-->
-                        <button class="btn btn-primary renkBtn" type="button">Ekle</button>
+                        <div class="text-danger" asp-validation-summary="All"></div>
+                        <button class="btn btn-primary renkBtn" type="submit">Ekle</button>
                     </form>
                 </div>
             </div>

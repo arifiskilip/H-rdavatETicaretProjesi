@@ -5,8 +5,10 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class IlDal : GenericRepository<Il, HirdavatContext>, IIlDal
+    public class IlDal : GenericRepository<Il>, IIlDal
     {
-    
+        public IlDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
     }
 }

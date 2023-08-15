@@ -21,6 +21,7 @@ namespace WebUI.Controllers
 
         public async Task<IActionResult> Index()
         {
+
             ProducutListPageModel model = new()
             {
                 BrandResult = await _markaService.GetAllAsync(),

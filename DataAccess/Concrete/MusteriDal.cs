@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
-    public class MusteriDal : GenericRepository<Musteri, HirdavatContext>, IMusteriDal
+    public class MusteriDal : GenericRepository<Musteri>, IMusteriDal
     {
-        
+        public MusteriDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
     }
 }

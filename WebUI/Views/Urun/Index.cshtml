@@ -89,7 +89,28 @@
                                                     <div class="row">
                                                         <div class="col-md-7">
                                                             <div style="text-align: start; white-space: nowrap;">
-                                                                <p class="acikrenk">Ürün Kodu: @item.Kod <br> Marka: @Model.BrandResult.Data.SingleOrDefault(x=> x.Id == item.Id).Ad<br>İskonto:%5<br>Stok durumu: @item.StokDurum <br>@item.ListeFiyat ₺  </p>
+                                                                <p class="acikrenk">
+                                                                    Ürün Kodu: @item.Kod <br> Marka:            
+                                                                    @{
+                                                                        var brandName = Model.BrandResult.Data.FirstOrDefault(x => x.Id == item.MarkaId);
+                                                                         if (brandName!= null)
+                                                                        {
+                                                                            @brandName.Ad
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <text>YOK</text>
+                                                                        }
+                                                                    }
+                                                                    <br>İskonto:%5<br>Stok durumu: @if (item.StokDurum ==true)
+                                                                    {
+                                                                        <text>Mevcut</text>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <text>Mevcut değil</text>
+                                                                    }
+                                                                    <br>@item.ListeFiyat ₺  </p>
                                                                 <ul class="reviews" style="padding-top: 0px!important;">
                                                                     <li><i class="las la-star"></i></li>
                                                                     <li><i class="las la-star"></i></li>

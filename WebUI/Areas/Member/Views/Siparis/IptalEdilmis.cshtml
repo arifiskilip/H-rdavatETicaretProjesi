@@ -1,0 +1,65 @@
+﻿@{
+    TempData["Title"] = "İptal Edilen Siparişler";
+}
+
+<div class="card m-5">
+    <div class="card-body">
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Ürün İsmi</th>
+                        <th>Marka</th>
+                        <th>Adet</th>
+                        <th>Sipariş Tarihi</th>
+                        <th>Ücret</th>
+                        <th>Durum</th>
+                        <th>Eylemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cedric Kelly</td>
+                        <td>Senior Javascript Developer</td>
+                        <td>Edinburgh</td>
+                        <td>22</td>
+                        <td>2012/03/29</td>
+                        <td>$433,060</td>
+                        <td><div class="badge badge-info badge-pill">İptal Edildi</div></td>
+                        <td>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Colleen Hurst</td>
+                        <td>Javascript Developer</td>
+                        <td>San Francisco</td>
+                        <td>39</td>
+                        <td>2009/09/15</td>
+                        <td>$205,500</td>
+                        <td><div class="badge badge-info badge-pill">İptal Edildi</div></td>
+                        <td>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bruno Nash</td>
+                        <td>Software Engineer</td>
+                        <td>London</td>
+                        <td>38</td>
+                        <td>2011/05/03</td>
+                        <td>$163,500</td>
+                        <td><div class="badge badge-info badge-pill">İptal Edildi</div></td>
+                        <td>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                            <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

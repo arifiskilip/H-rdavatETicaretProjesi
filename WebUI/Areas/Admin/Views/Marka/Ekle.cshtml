@@ -1,0 +1,30 @@
+﻿@using WebUI.Areas.Admin.Models;
+@model BrandAddModel
+@{
+    TempData["Title"] = "Marka Ekle";
+}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-xl-12">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header renk">Ürün Detayları</div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="Marka" asp-action="Ekle" method="post">
+                        <!-- Form Row-->
+                        <div class="form-row">
+                            <!-- Form Group (first name)-->
+                            <div class="form-group col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Ürün Adı</label>
+                                <input class="form-control" asp-for="Ad" id="inputFirstName" type="text" />
+                                <div class="text-danger" asp-validation-summary="All"></div>
+                            </div>
+                            <button class="btn btn-primary renkBtn" type="submit">Ekle</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

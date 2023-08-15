@@ -8,8 +8,12 @@ using System.Linq;
 
 namespace DataAccess.Concrete
 {
-    public class KategoriDal : GenericRepository<Kategori, HirdavatContext>, IKategoriDal
+    public class KategoriDal : GenericRepository<Kategori>, IKategoriDal
     {
+        public KategoriDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
+
         public List<KategoriListDto> KategoriListDtos()
         {
             throw new System.NotImplementedException();

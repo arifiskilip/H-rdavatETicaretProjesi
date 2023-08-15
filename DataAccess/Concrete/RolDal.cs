@@ -5,7 +5,10 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class RolDal : GenericRepository<Rol,HirdavatContext>,IRolDal
+    public class RolDal : GenericRepository<Rol>, IRolDal
     {
+        public RolDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
     }
 }

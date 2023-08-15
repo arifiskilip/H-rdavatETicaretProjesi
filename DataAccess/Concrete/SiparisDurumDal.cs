@@ -5,8 +5,10 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class SiparisDurumDal : GenericRepository<SiparisDurum, HirdavatContext>, ISiparisDurumDal
+    public class SiparisDurumDal : GenericRepository<SiparisDurum>, ISiparisDurumDal
     {
-       
+        public SiparisDurumDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
     }
 }

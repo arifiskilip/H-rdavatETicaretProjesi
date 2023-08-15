@@ -5,25 +5,22 @@ namespace DataAccess.UnitOfWork
 {
     public class UoW : IUoW
     {
-     
 
+        private HirdavatContext _context;
+
+        public UoW(HirdavatContext context)
+        {
+            _context = context;
+        }
 
         public void Commit()
         {
-            using (HirdavatContext _context = new HirdavatContext())
-            {
-                _context.SaveChanges();
-            }
-           
+            _context.SaveChanges();
         }
 
         public async Task CommitAsync()
         {
-            using (HirdavatContext _context = new HirdavatContext())
-            {
-                await _context.SaveChangesAsync();
-            }
-            
+            await _context.SaveChangesAsync();
         }
     }
 }

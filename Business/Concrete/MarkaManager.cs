@@ -33,9 +33,9 @@ namespace Business.Concrete
             {
                 await Task.Run(() => { _markaDal.Delete(checkEntity); });
                 await _uoW.CommitAsync();
-                return new SuccessResult("Markame işlemi başarılı!");
+                return new SuccessResult("Silme işlemi başarılı!");
             }
-            return new ErrorResult("Markame işlemi başarısız!");
+            return new ErrorResult("Silme işlemi başarısız!");
         }
 
         public async Task<IDataResult<List<Marka>>> GetAllAsync()
@@ -55,7 +55,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<Marka>(checkEntity, "İşlem başarılı!");
             }
-            return new ErrorDataResult<Marka>($"{id}'li veri mevcut değMarka!");
+            return new ErrorDataResult<Marka>($"Id={id}'li veri mevcut değil!");
         }
 
         public async Task<IResult> UpdateAsync(Marka entity)

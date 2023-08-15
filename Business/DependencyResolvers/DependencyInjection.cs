@@ -12,7 +12,7 @@ namespace Business.DependencyResolvers
     {
         public static IServiceCollection AddDependencies(this IServiceCollection services)
         {
-            //services.AddDbContext<HirdavatContext>();
+            services.AddDbContext<HirdavatContext>();
             services.AddScoped<IUoW, UoW>();
             services.AddScoped<IIlDal, IlDal>();
             services.AddScoped<IIlService, IlManager>();

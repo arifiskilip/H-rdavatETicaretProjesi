@@ -20,7 +20,7 @@
         <!-- * * Tip * * You can use text or an image for your navbar brand.-->
         <!-- * * * * * * When using an image, we recommend the SVG format.-->
         <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand" href="home.html"> <img class="w-50 h-50" src="~/E-Ticaret/images/bigalogo.png"> <small> I Admin </small></a>
+        <a class="navbar-brand" href="home.html"> <img class="w-50 h-50" src="~/E-Ticaret/images/bigalogo.png"> <small> I Üye </small></a>
         <!-- Sidenav Toggle Button-->
         <!--<button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>-->
         <!-- Navbar Items-->
@@ -85,19 +85,20 @@
                             </nav>
                         </div>
 
-                        <div class="sidenav-menu-heading">Ürün</div>
+                        <div class="sidenav-menu-heading">Sipariş</div>
                         <!-- Sidenav Accordion (Dashboard)-->
                         <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false" aria-controls="collapseDashboards">
                             <div class="nav-link-icon"><i class="fa-solid fa-list "></i></div>
-                            Ürünler
+                            Siparişlerim
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
                         </a>
                         <div class="collapse" id="collapseProduct" data-parent="#accordionSidenav" style="">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link " href="/Admin/Urun">
-                                    Tüm Ürünler
+                                <a class="nav-link " href="/Member/Siparis">
+                                    Tüm Siparişlerim
                                 </a>
-                                <a class="nav-link" href="/Admin/Urun/Ekle">Ürün Ekle</a>
+                                <a class="nav-link" href="/Member/Siparis/Tamamlanmis">Tamamlanan Siparişler</a>
+                                <a class="nav-link" href="/Member/Siparis/IptalEdilmis">İptal Edilen Siparişler</a>
                             </nav>
                         </div>
                         <div class="sidenav-menu-heading">MARKA</div>
@@ -144,7 +145,7 @@
         <div id="layoutSidenav_content">
             <main>
                 @RenderBody()
-               
+
 
 
 

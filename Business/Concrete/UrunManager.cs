@@ -66,7 +66,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<UrunDto>(checkEntity, "İşlem başarılı!");
             }
-            return new ErrorDataResult<UrunDto>($"{id}'li veri mevcut değil!");
+            return new ErrorDataResult<UrunDto>($"Id={id}'sine sahip ürün mevcut değil!");
         }
 
         public IDataResult<List<UrunDto>> GetProductListDto()

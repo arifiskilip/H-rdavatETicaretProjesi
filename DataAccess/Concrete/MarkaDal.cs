@@ -5,8 +5,10 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class MarkaDal : GenericRepository<Marka, HirdavatContext>, IMarkaDal
+    public class MarkaDal : GenericRepository<Marka>, IMarkaDal
     {
-       
+        public MarkaDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
     }
 }

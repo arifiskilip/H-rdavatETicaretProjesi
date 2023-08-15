@@ -10,8 +10,12 @@ using System.Collections.Generic;
 
 namespace DataAccess.Concrete
 {
-    public class UrunDal : GenericRepository<Urun, HirdavatContext>, IUrunDal
+    public class UrunDal : GenericRepository<Urun>, IUrunDal
     {
+        public UrunDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
+
         public  UrunDto GetProductDto(int id)
         {
             using (HirdavatContext context = new HirdavatContext())

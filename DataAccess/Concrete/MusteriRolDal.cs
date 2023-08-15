@@ -5,7 +5,10 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class MusteriRolDal : GenericRepository<MusteriRol,HirdavatContext>,IMusteriRolDal
+    public class MusteriRolDal : GenericRepository<MusteriRol>, IMusteriRolDal
     {
+        public MusteriRolDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
+        {
+        }
     }
 }

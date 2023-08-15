@@ -63,6 +63,11 @@ namespace WebUI
                areaName: "Admin",
                pattern: "Admin/{controller=Urun}/{action=Index}/{id?}"
              );
+                endpoints.MapAreaControllerRoute(
+              name: "Member",
+              areaName: "Member",
+              pattern: "Member/{controller=Siparis}/{action=Index}/{id?}"
+            );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
