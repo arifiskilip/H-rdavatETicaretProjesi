@@ -1,0 +1,118 @@
+﻿@using WebUI.Areas.Member.Models;
+@model MemberUpdateModel
+@{
+    TempData["Title"] = "Profil Bilgileri";
+}
+@if (ViewBag.Success == false)
+{
+    <div class="m-5">
+        <div class="alert alert-danger">@TempData["Message"]</div>
+    </div>
+}
+@if (ViewBag.Success == true)
+{
+    <div class="m-5">
+        <div class="alert alert-success">@TempData["Message"]</div>
+    </div>
+}
+<div class="container" style="margin-top: 1rem;">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link ml-0 renk" href="/Member/Profil/Index">Profil Bilgileri</a>
+        <a class="nav-link " href="/Member/Profil/Guvenlik"><b>Güvenlik</b></a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+
+        </div>
+    </div>
+    <div class="col-xl-16">
+        <!-- Account details card-->
+        <div class="card mb-4">
+            <div class="card-header renk">Hesap Detayları</div>
+            <div class="card-body">
+                <form asp-area="Member" asp-controller="Profil" asp-action="Index" enctype="multipart/form-data">
+                    <!-- Form Row-->
+                    <div class="form-row">
+                        <input asp-for="Id" type="text" style="display:none;"/>
+                        <input asp-for="MevcutResim" type="text" style="display:none;"/>
+                        <input type="text" style="display:none;"/>
+                        <!-- Form Group (first name)-->
+                        <div class="form-group col-md-6">
+                            <label class="small mb-1"  for="inputFirstName">Firma Adı</label>
+                            <input class="form-control" asp-for="FirmaAd" id="inputFirstName" type="text" placeholder="">
+                        </div>
+                        <!-- Form Group (last name)-->
+                        <div class="form-group col-md-6">
+                            <label class="small mb-1"  for="inputLastName">İsim</label>
+                            <input class="form-control" asp-for="Ad" id="inputLastName" type="text" placeholder="">
+                        </div>
+                    </div>
+                    <!-- Form Row        -->
+                    <div class="form-row">
+                        <!-- Form Group (organization name)-->
+                        <!-- Form Group (location)-->
+                        <div class="form-group col-md-6">
+                            <label class="small mb-1"  for="inputLocation">Soyisim</label>
+                            <input class="form-control" asp-for="Soyad" id="inputLocation" type="text" placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="small mb-1" for="Kategori">İl</label>
+                            @Html.DropDownList("IlId", ViewBag.Iller as SelectList, "Seçiniz", new { @class = "form-control",@style="display:flex;text-align: initial; padding-top: 9px;" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Form Group (first name)-->
+                        <div class="form-group col-md-6" id="ilceDiv" style="display:none;">
+                            <label class="small mb-1 " for="inputEmailAddress">İlçe</label>
+                            <select id="IlceId" asp-for="IlceId" name="IlceId" class="form-control" style=" display:flex;text-align: initial; padding-top: 9px;"></select>
+                        </div>
+                        <!-- Form Group (last name)-->
+                        <div class="form-group col-md-6">
+                            <label class="small mb-1" for="inputPhone">Telefon Numarası</label>
+                            <input class="form-control" asp-for="Telefon" id="inputPhone" type="tel" placeholder="555-123-4567">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="small mb-1" for="inputFirstName">Adres</label>
+                            <input class="form-control" asp-for="Adres" id="inputFirstName" type="text" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="small mb-1" for="inputImage">Resim Ekle</label>
+                            <input asp-for="Resim" class="form-control" id="inputImage" type="file" placeholder="">
+                        </div>
+                    </div>
+                    <div class="text-danger" asp-validation-summary="All"></div>
+                    <!-- Form Group (email address)-->
+                    <!-- Form Row-->
+                    <!-- Save changes button-->
+                    <button class="btn btn-primary renkBtn" type="submit">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $("#IlId").change(function () {
+            var ilId = $(this).val();
+            if (ilId != "") {      
+                $.getJSON("/Member/Profil/GetIlceler", { ilId: ilId }, function (data) {
+                    var ilceSelect = $("#IlceId");
+                    ilceSelect.empty();
+                    ilceSelect.append($('<option></option>').val("").text("Seçiniz"));
+                    console.log(data)
+                    $.each(data, function (index, ilce) {
+                        ilceSelect.append($('<option></option>').val(ilce.id).text(ilce.ad));
+                    });
+                    $("#ilceDiv").show();
+                });
+            } else {
+                $("#ilceDiv").hide();
+            }
+        });
+    });
+</script>

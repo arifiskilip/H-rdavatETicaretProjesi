@@ -1,4 +1,14 @@
-﻿<html lang="tr">
+﻿@using DataAccess.Contexts;
+@using System.Security.Claims;
+@{
+    HirdavatContext context = new HirdavatContext();
+
+        var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        var getUser= context.Musteri.Find(userId);
+    
+}
+
+<html lang="tr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,13 +52,13 @@
             </li>
 
             <li class="nav-item dropdown no-caret mr-3 mr-lg-0 dropdown-user">
-                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="~/E-Ticaret/dist/assets/img/illustrations/profiles/profile-1.png"></a>
+                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="@getUser.Resim"></a>
                 <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
-                        <img class="dropdown-user-img" src="~/E-Ticaret/dist/assets/img/illustrations/profiles/profile-1.png">
+                        <img class="dropdown-user-img" src="@getUser.Resim">
                         <div class="dropdown-user-details">
-                            <div class="dropdown-user-details-name">Sinan KUL</div>
-                            <div class="dropdown-user-details-email">example@mail.com</div>
+                            <div class="dropdown-user-details-name">@getUser.Ad @getUser.Soyad</div>
+                            <div class="dropdown-user-details-email">@getUser.Email</div>
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
@@ -65,7 +75,7 @@
             <nav class="sidenav shadow-right sidenav-light">
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
-                        <a class="nav-link collapsed mt-5" href="home.html" aria-expanded="false" aria-controls="collapseDashboards">
+                        <a class="nav-link collapsed mt-5" href="/AnaSayfa" aria-expanded="false" aria-controls="collapseDashboards">
                             <div class="nav-link-icon"><i class="fa-solid fa-home"></i></div>
                             Anasayfa
                         </a>
@@ -78,10 +88,10 @@
                         </a>
                         <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link" href="siparisler.html">
+                                <a class="nav-link" href="/Member/Profil/Index">
                                     Hesap Detayları
                                 </a>
-                                <a class="nav-link" href="profil-guvenlik.html">Güvenlik</a>
+                                <a class="nav-link" href="/Member/Profil/Guvenlik">Güvenlik</a>
                             </nav>
                         </div>
 
@@ -101,43 +111,7 @@
                                 <a class="nav-link" href="/Member/Siparis/IptalEdilmis">İptal Edilen Siparişler</a>
                             </nav>
                         </div>
-                        <div class="sidenav-menu-heading">MARKA</div>
-                        <!-- Sidenav Accordion (Dashboard)-->
-                        <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseBrand" aria-expanded="false" aria-controls="collapseDashboards">
-                            <div class="nav-link-icon"><i class="fa fa-building "></i></div>
-                            Markalar
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
-                        </a>
-                        <div class="collapse" id="collapseBrand" data-parent="#accordionSidenav" style="">
-                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link  " href="/Admin/Marka">
-                                    Tüm Markalar
-                                </a>
-                                <a class="nav-link" href="/Admin/Marka/Ekle">Marka Ekle</a>
-                            </nav>
-                        </div>
-                        <div class="sidenav-menu-heading">KATEGORİ</div>
-                        <!-- Sidenav Accordion (Dashboard)-->
-                        <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseDashboards">
-                            <div class="nav-link-icon"><i class="fa fa-users"></i></div>
-                            Kategoriler
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
-                        </a>
-                        <div class="collapse" id="collapseCategory" data-parent="#accordionSidenav" style="">
-                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link " href="/Admin/Kategori">
-                                    Tüm Kategoriler
-                                </a>
-                                <a class="nav-link" href="/Admin/Kategori/Ekle">Kategori Ekle</a>
-                            </nav>
-                        </div>
-                        <!-- Sidenav Heading (App Views)-->
-                        <div class="sidenav-menu-heading">Hesap</div>
-                        <!-- Sidenav Accordion (Pages)-->
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="nav-link-icon"><i class="fa-solid fa-wallet"></i></div>
-                            Hesap Numaraları
-                        </a>
+  
                     </div>
                 </div>
             </nav>
