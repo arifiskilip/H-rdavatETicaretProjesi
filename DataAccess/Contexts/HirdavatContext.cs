@@ -26,6 +26,7 @@ namespace DataAccess.Contexts
         public DbSet<SiparisDurum> SiparisDurum { get; set; }
         public DbSet<Urun> Urun { get; set; }
         public DbSet<Rol> Rol { get; set; }
+        public DbSet<Sepet> Sepet { get; set; }
         public DbSet<MusteriRol> MusteriRol { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
@@ -17,5 +18,7 @@ namespace Entities.Concrete
         public int? Iskonto3 { get; set; }
         public int? KutuAdet { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
+
+        public List<Sepet> Sepets { get; set; }
     }
 }

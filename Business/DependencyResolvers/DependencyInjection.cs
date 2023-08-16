@@ -35,6 +35,7 @@ namespace Business.DependencyResolvers
             services.AddScoped<IAuthService, AuthManager>();
             services.AddScoped<IRolDal, RolDal>();
             services.AddScoped<IRolService, RolManager>();
+            services.AddScoped<ISepetDal, SepetDal>();
             services.AddScoped<IMusteriRolDal, MusteriRolDal>();
             services.AddScoped<IMusteriRolService, MusteriRolManager>();
 

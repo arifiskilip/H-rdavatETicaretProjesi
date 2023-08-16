@@ -1,4 +1,5 @@
 ﻿using Business.Utilities.Results;
+using Entities.Concrete;
 using Entities.Dtos;
 using System.Collections.Generic;
 

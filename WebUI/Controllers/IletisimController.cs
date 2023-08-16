@@ -10,8 +10,11 @@ namespace WebUI.Controllers
         [Authorize(Roles ="Üye")]
         public IActionResult Index()
         {
-            var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
-            var name = userId;
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                TempData["UserId"] = userId;
+            }
             return View();
         }
     }

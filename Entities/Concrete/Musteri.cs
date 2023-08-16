@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-
+using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
@@ -18,5 +18,7 @@ namespace Entities.Concrete
         public string? Adres { get; set; }
         public string? Sifre { get; set; }
         public DateTime? CreateDate { get; set; }=DateTime.Now;
+
+        public List<Sepet> Sepets { get; set; }
     }
 }

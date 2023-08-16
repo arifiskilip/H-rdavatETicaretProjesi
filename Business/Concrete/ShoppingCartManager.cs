@@ -1,29 +1,32 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
     public class ShoppingCartManager : IShoppingCartService
     {
-        private List<ShoppingCartItem> items = new List<ShoppingCartItem>();
-        public IEnumerable<ShoppingCartItem> Items => items;
+        private readonly List<Sepet> items = new List<Sepet>();
+    
+
         public void AddItem(Urun urun, int quantity)
         {
             var existingItem = items.FirstOrDefault(item => item.Urun.Id == urun.Id);
 
             if (existingItem != null)
             {
-                existingItem.Quantity += quantity;
+                existingItem.Adet += quantity;
             }
             else
             {
-                items.Add(new ShoppingCartItem { Urun = urun, Quantity = quantity });
+                items.Add(new Sepet { Urun = urun, Adet = quantity });
             }
+        }
+
+        public List<Sepet> GetItems()
+        {
+            return items;
         }
 
         public double CalculateTotal()
@@ -48,7 +51,7 @@ namespace Business.Concrete
                 {
                     totalPrice = (totalPrice * (int)item.Urun.Iskonto3 / 100);
                 }
-                totalPrice += (double)item.Urun.ListeFiyat * (int)item.Quantity; 
+                totalPrice += (double)item.Urun.ListeFiyat * (int)item.Adet; 
             }
 
             return totalPrice;
@@ -79,7 +82,7 @@ namespace Business.Concrete
             {
                 totalPrice = (totalPrice * (int)item.Urun.Iskonto3 / 100);
             }
-            totalPrice += (double)item.Urun.ListeFiyat * (int)item.Quantity;
+            totalPrice += (double)item.Urun.ListeFiyat * (int)item.Adet;
             return totalPrice;
         }
 
@@ -93,4 +96,5 @@ namespace Business.Concrete
             }
         }
     }
+    //public IEnumerable<ShoppingCartItem> Items => items;
 }

@@ -31,6 +31,11 @@ namespace WebUI.Controllers
         [HttpGet]
         public IActionResult Giris()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                TempData["UserId"] = userId;
+            }
             return View();
         }
         [HttpPost]

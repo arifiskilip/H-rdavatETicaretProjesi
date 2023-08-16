@@ -9,5 +9,6 @@ namespace WebUI.Models
         public IDataResult<List<Urun>> ProductResult { get; set; }
         public IDataResult<List<Kategori>> CategoryResult { get; set; }
         public IDataResult<List<Marka>> BrandResult { get; set; }
+        public List<Sepet> Sepet { get; set; }
     }
 }

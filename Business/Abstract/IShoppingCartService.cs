@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using System.Collections.Generic;
 
 namespace Business.Abstract
 {
@@ -9,5 +10,6 @@ namespace Business.Abstract
         void Clear();
         double CalculateTotal();
         double KdvAmount(Urun urun);
+        List<Sepet> GetItems();
     }
 }
