@@ -1,0 +1,129 @@
+﻿@using DataAccess.Concrete;
+@using DataAccess.Helpers;
+@using Entities.Concrete;
+@using Entities.Enums;
+@model IDataResult<List<OrderDetailDto>>
+@{
+    TempData["Title"] = "Tüm Detay";
+    SepetDal sepetDal = new SepetDal(); 
+}
+
+
+
+<div class="card m-5">
+
+    <div class="card-body">
+        <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Teslim Adeti : </label>
+                        <span class="close">&times;</span>
+                        <input type="number" min="0" class="teslimAdet" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-success modalGuncelleButton">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Ürün Kodu</th>
+                        <th>Ürün Adı</th>
+                        <th>Marka</th>
+                        <th>İstenen Adet</th>
+                        <th>Teslim Adet</th>
+                        <th>Liste Fiyatı</th>
+                        <th>İskonto</th>
+                        <th>KDV</th>
+                        <th>Toplam</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Data.Count > 0)
+                    {
+                        @foreach (var item in Model.Data)
+                        {
+                            <tr>
+                                <td>@item.UrunKod</td>
+                                <td>@item.UrunIsım</td>
+                                <td>@item.UrunMarka
+                                </td>
+                                <td>@item.TalepAdet</td>
+                                <td>@item.TeslimAdet </td>
+                                <td>@item.UrunFiyat ₺</td>
+                                <td>%@item.ToplamIskonto</td>
+                                <td>%@item.ToplamKdv</td>
+                                <td>@item.ToplamTutar ₺</td>
+                                @if (item.DurumId == (int)SiparisDurumEnum.Yolda)
+                                {
+                                    <td><button class="guncelleButon btn btn-outline-primary" data-urun-id="@item.Id">Yeni Teslim Adeti</button></td>
+                                }
+                          
+                            </tr>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">İlgili siparişini bulunmamaktadır.</div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $(".guncelleButon").click(function () {
+            var urunId = $(this).data("urun-id");
+            $("#confirmationModal").modal("show"); // Modalı görüntüle
+
+            $(".modalGuncelleButton").off("click").on("click", function () {
+                var yeniTeslimAdet = $("#confirmationModal .teslimAdet").val();
+                $.ajax({
+                    url: "/Admin/Siparis/EditNewDeliveryAmount", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        siparisDetayId: urunId,
+                        yeniTeslimAdet: yeniTeslimAdet
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu!");
+                    }
+                });
+
+                $("#confirmationModal").modal("hide"); // Modalı kapat
+            });
+
+            $(".close").click(function () {
+                $("#confirmationModal").modal("hide"); // Modalı kapat
+            });
+        });
+    });
+
+</script>
+
+
+

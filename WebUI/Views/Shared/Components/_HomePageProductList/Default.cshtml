@@ -1,4 +1,5 @@
-﻿@using Entities.Concrete;
+﻿@using DataAccess.Helpers;
+@using Entities.Concrete;
 @model List<Urun>
 <section class="featured-items padding-top padding-bottom" id="featured-items">
     <div class="container">
@@ -27,10 +28,7 @@
                                 <div class="item-overlay">
                                     <div class="item-btns">
                                         <a href="/Member/Urun/Ekle/@item.Id" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
-                                        <a href="#" class="btn btn-view"><i class="las la-heart"></i></a>
-                                        <a href="files/product-detail.html" class="btn btn-view">
-                                            <i class="las la-plus"></i>
-                                        </a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +46,7 @@
                                                 {
                                                 <p class="acikrenk"> Stok: Yok</p>
                                                 }
-                                                <br> Liste Fiyatı: @item.ListeFiyat ₺</p>
+                                                <br>
                                             <ul class="reviews" style="padding-top: 0px!important;">
                                                 <li><i class="las la-star"></i></li>
                                                 <li><i class="las la-star"></i></li>
@@ -62,7 +60,7 @@
                                         <div style="text-align: end;">
                                             <p class="item-price" style="font-size: 25px;">
                                                 <span class="acikrenk"
-                                              style="font-size: 14px;">İndirimli Fiyat</span> <br> 9,99 ₺
+                                              style="font-size: 14px;">Ürün Fiyatı</span> <br> @CalculateHalpers.KdvAmount(item.Id,1) ₺
                                             </p>
                                         </div>
                                     </div>

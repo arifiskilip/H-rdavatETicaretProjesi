@@ -1,4 +1,5 @@
-﻿@model ProducutListPageModel
+﻿@using DataAccess.Helpers;
+@model ProducutListPageModel
 
 @{
     TempData["Title"] = "Ürünler";
@@ -21,7 +22,7 @@
                             {
                                 @foreach (var item in Model.CategoryResult.Data)
                                 {
-                                    <li><a href="/Urun/Kategori/@item">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.KategoriId == item.Id).Count())</span></li>
+                                    <li><a href="/Urun/Kategori/@item.Id">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.KategoriId == item.Id).Count())</span></li>
                                 }
                             }
                             else if (Model.CategoryResult.Data.Count() == 0)
@@ -78,7 +79,7 @@
                                                     <img src="~/E-Ticaret/images/urun1.jpg">
                                                     <div class="item-overlay">
                                                         <div class="item-btns">
-                                                            <a href="#" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
+                                                            <a href="/Member/Urun/Ekle/@item.Id" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
 
                                                             <a href="files/product-detail.html" class="btn btn-view"><i class="las la-plus"></i></a>
                                                         </div>
@@ -90,7 +91,8 @@
                                                         <div class="col-md-7">
                                                             <div style="text-align: start; white-space: nowrap;">
                                                                 <p class="acikrenk">
-                                                                    Ürün Kodu: @item.Kod <br> Marka: @{
+                                                                    Ürün Kodu: @item.Kod <br> Marka:
+                                                                    @{
                                                                         var brandName = Model.BrandResult.Data.FirstOrDefault(x => x.Id == item.MarkaId);
                                                                         if (brandName != null)
                                                                         {
@@ -100,7 +102,16 @@
                                                                         {
                                                                             <text>YOK</text>
                                                                         }
-                                                                    }<br>İskonto:%5<br>Stok durumu: @item.StokDurum <br>@item.ListeFiyat ₺
+                                                                    }
+                                                                    <br>İskonto:%5<br>Stok durumu: @if (item.StokDurum == true)
+                                                                    {
+                                                                        <text>Var</text>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <text>Yok</text>
+                                                                    }
+                                                                    <br>@CalculateHalpers.KdvAmount(item.Id,1) ₺
                                                                 </p>
                                                                 <ul class="reviews" style="padding-top: 0px!important;">
                                                                     <li><i class="las la-star"></i></li>

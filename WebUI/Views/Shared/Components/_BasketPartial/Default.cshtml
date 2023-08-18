@@ -8,12 +8,13 @@
 
 <section class="shop-card-window hidden" id="shop-card-window">
 
-        <a href="#" id="close-card-window" class="close-card-window"><i class="las la-times"></i></a>
-        <div class="shop-card-window-content">
-            <h4 class="shop-card-heading">Sepetim</h4>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="mini-bag">
-                    @if (Model != null)
+    <a href="#" id="close-card-window" class="close-card-window"><i class="las la-times"></i></a>
+    <div class="shop-card-window-content">
+        <h4 class="shop-card-heading">Sepetim</h4>
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="mini-bag">
+                @if (User.Identity.IsAuthenticated && Model.Sepet != null)
+
                 {
                     @foreach (var item in Model.Sepet)
                     {
@@ -24,41 +25,54 @@
                             <div class="item-details">
                                 <h4 class="item-name">@item.Urun.Ad</h4>
                                 <span class="item-qty">Adet: @item.Adet</span>
-                                <span class="item-price">Fiyat: @sepetDal.KdvAmount(item.UrunId) ₺</span>
-                                <button  class="deleteproduct" data-id="@item.Urun.Id"><i class="las la-trash"></i> </button>
+                                <span class="item-price">
+                                    Fiyat: @if (item.Adet > 1)
+                                    {
+                                        var result = sepetDal.KdvAmount(item.UrunId) * item.Adet;
+                                        <text>@Math.Round((double)result,2)</text>
+                                    }
+                                    else
+                                    {
+                                        <text>@sepetDal.KdvAmount(item.UrunId)</text>
+                                    }
+                                    ₺
+                                </span>
+                                <button class="deleteproduct" data-id="@item.Urun.Id"><i class="las la-trash"></i> </button>
                             </div>
                         </div>
                     }
                 }
 
-                </div>
             </div>
-           @if (User.Identity.IsAuthenticated)
+        </div>
+        @if (User.Identity.IsAuthenticated)
         {
-             <div class="bag-btn">
+            <div class="bag-btn">
                 <h4 class="total"><span>Toplam Tutar: </span>@ViewBag.totalPrice ₺</h4>
-                <a href="#" class="btn web-btn rounded-pill">Ödemeye Geç</a>
+                <a href="/Urun/SiparisOlustur" class="btn web-btn rounded-pill">Ödemeye Geç</a>
             </div>
         }
+     
+        
         else
         {
-    <div class="bag-btn">
-                    <h4 class="total"><span>Toplam Tutar: </span>0 ₺</h4>
-                    <a href="#" class="btn web-btn rounded-pill">Ödemeye Geç</a>
-            </div>
+        <div class="bag-btn">
+            <h4 class="total"><span>Toplam Tutar: </span>0 ₺</h4>
+                <a href="/Urun/SiparisOlustur" class="btn web-btn rounded-pill">Ödemeye Geç</a>
+        </div>
         }
     </div>
-    </section>
+</section>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $(".deleteproduct").on("click", function (e) {
-                console.log(e);
-                e.preventDefault();
-                var id = $(this).data("id");
-                $("#deleteCart").attr("href", "/Member/Urun/Sil/" + id);
-                $("#confirmationModal").modal("show");
-            });
+<script>
+    $(document).ready(function () {
+        $(".deleteproduct").on("click", function (e) {
+            console.log(e);
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#deleteCart").attr("href", "/Member/Urun/Sil/" + id);
+            $("#confirmationModal").modal("show");
         });
+    });
 </script>

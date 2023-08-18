@@ -11,6 +11,7 @@ namespace DataAccess.Abstract
         double CalculateTotal(int memberId);
         public double KdvAmount(int productId);
         void DeleteOneProduct(int productId, int memberId);
+        int CalculateKdv(int memberId);
         List<Sepet> GetItems(int memberId);
     }
 }

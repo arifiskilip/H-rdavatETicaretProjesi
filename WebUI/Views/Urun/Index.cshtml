@@ -1,4 +1,5 @@
-﻿@model ProducutListPageModel
+﻿@using DataAccess.Helpers;
+@model ProducutListPageModel
 
 @{
     TempData["Title"] = "Ürünler";
@@ -21,7 +22,7 @@
                             {
                                 @foreach (var item in Model.CategoryResult.Data)
                                 {
-                                    <li><a href="/Urun/Kategori/@item">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.KategoriId == item.Id).Count())</span></li>
+                                    <li><a href="/Urun/Kategori/@item.Id">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.KategoriId == item.Id).Count())</span></li>
                                 }
                             }
                             else if (Model.CategoryResult.Data.Count() == 0)
@@ -104,13 +105,14 @@
                                                                     }
                                                                     <br>İskonto:%5<br>Stok durumu: @if (item.StokDurum ==true)
                                                                     {
-                                                                        <text>Mevcut</text>
+                                                                        <text>Var</text>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <text>Mevcut değil</text>
+                                                                        <text>Yok</text>
                                                                     }
-                                                                    <br>@item.ListeFiyat ₺  </p>
+                                                                    <br>@CalculateHalpers.KdvAmount(item.Id,1) ₺
+                                                                </p>
                                                                 <ul class="reviews" style="padding-top: 0px!important;">
                                                                     <li><i class="las la-star"></i></li>
                                                                     <li><i class="las la-star"></i></li>

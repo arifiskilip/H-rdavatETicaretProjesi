@@ -1,0 +1,50 @@
+﻿@using Entities.Concrete;
+@using Entities.Enums;
+@model IDataResult<List<OrderDetailDto>>
+@{
+    TempData["Title"] = "Tüm Detay";
+}
+<div class="card m-5">
+    <div class="card-body">
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                         <th>Ürün Kodu</th>
+                         <th>Ürün Adı</th>
+                         <th>Marka</th>
+                         <th>İstenen Adet</th>
+                         <th>Teslim Adet</th>
+                         <th>Liste Fiyatı</th>
+                         <th>İskonto</th>
+                         <th>KDV</th>
+                         <th>Toplam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Data.Count > 0)
+                    {
+                        @foreach (var item in Model.Data)
+                        {
+                            <tr>
+                                <td>@item.UrunKod</td>
+                                <td>@item.UrunIsım</td>
+                                <td>@item.UrunMarka</td>
+                                <td>@item.TalepAdet</td>
+                                <td>@item.TeslimAdet </td>
+                                <td>@item.UrunFiyat ₺</td>
+                                <td>%@item.ToplamIskonto</td>
+                                <td>%@item.ToplamKdv</td>
+                                <td>@item.ToplamTutar ₺</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">İlgili siparişini bulunmamaktadır.</div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

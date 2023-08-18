@@ -2,7 +2,7 @@
 @using Entities.Enums;
 @model IDataResult<List<OrderDto>>
 @{
-    TempData["Title"] = "İptal Edilen Sipariş";
+    TempData["Title"] = "İptal Edilen Siparişler";
 }
 <div class="card m-5">
     <div class="card-body">
@@ -12,6 +12,8 @@
                     <tr>
                         <th><p>Siparis Id</p></th>
                         <th>Müşteri Adı</th>
+                        <th>Şirket</th>
+                        <th>İletişim</th>
                         <th>Siparis Tarihi</th>
                         <th>Toplam Fiyat</th>
                         <th>Kdv Tutarı</th>
@@ -19,6 +21,7 @@
                         <th>Fatura Tutarı</th>
                         <th>Durumu</th>
                         <th></th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -29,9 +32,11 @@
                             <tr>
                                 <td>@item.Id</td>
                                 <td>@item.MusteriAdi</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.Telefon</td>
                                 <td>@item.Tarih</td>
-                                <td>@item.ToplamFiyat</td>
-                                <td>@item.KDVTutar ₺</td>
+                                <td>@item.ToplamFiyat ₺</td>
+                                <td>@item.KDVTutar </td>
                                 <td>@item.Indirim</td>
                                 <td>@item.FaturaTutari ₺</td>
                                 <td>
@@ -49,11 +54,12 @@
                                     }
                                 </td>
                                 <td>
-                                    <a href="/Member/Siparis/Detay/@item.Id">
-                                        <button class="btn btn-outline-primary">Detay</button>
+                                    <a href="/Admin/Siparis/Detay/@item.Id">
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
                                     </a>
+                                  
                                 </td>
-
+                               
                             </tr>
                         }
                     }

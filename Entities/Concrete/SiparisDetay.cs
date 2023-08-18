@@ -11,5 +11,9 @@ namespace Entities.Concrete
         public int? TeslimAdet { get; set; }
         public double? Fiyat { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
+
+
+        public Siparis Siparis { get; set; }
+        public Urun Urun { get; set; }
     }
 }

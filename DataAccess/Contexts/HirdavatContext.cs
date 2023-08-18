@@ -28,5 +28,6 @@ namespace DataAccess.Contexts
         public DbSet<Rol> Rol { get; set; }
         public DbSet<Sepet> Sepet { get; set; }
         public DbSet<MusteriRol> MusteriRol { get; set; }
+        public DbSet<UrunResim> UrunResim { get; set; }
     }
 }

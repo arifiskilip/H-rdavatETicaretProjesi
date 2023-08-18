@@ -20,5 +20,7 @@ namespace Entities.Concrete
         public DateTime? CreateDate { get; set; }=DateTime.Now;
 
         public List<Sepet> Sepets { get; set; }
+        public List<Siparis> Siparis { get; set; }
+
     }
 }

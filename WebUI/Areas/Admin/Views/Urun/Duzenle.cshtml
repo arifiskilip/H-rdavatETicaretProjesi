@@ -13,6 +13,7 @@
 }
 else
 {
+   
     <div class="container mt-4">
         <div class="row">
             <div class="col-xl-12">
@@ -20,6 +21,8 @@ else
                 <div class="card mb-4">
                     <div class="card-header renk">Ürün Detayları</div>
                     <div class="card-body">
+                        <a href="/Admin/Urun/ResimEkle/@ViewBag.productId"><button class="btn btn-warning">Resim Ekle</button> </a>
+                        
                         <form asp-area="Admin" asp-controller="Urun" asp-action="Duzenle" method="post">
                             <!-- Form Row-->
                             <div class="form-row">

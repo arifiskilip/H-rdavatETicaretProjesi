@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
 using Business.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Contexts;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +51,16 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<SiparisDetay>>("Listeleme işlemi başarısız!");
             }
             return new SuccessDataResult<List<SiparisDetay>>(datas, "Listeleme işlemi başarılı!");
+        }
+
+        public IDataResult<List<OrderDetailDto>> GetAllByOrderId(int orderId)
+        {
+            var datas = _siparisDetayDal.GetAllByOrderId(orderId);
+            if (datas.Count < -1)
+            {
+                return new ErrorDataResult<List<OrderDetailDto>>("Listeleme işlemi başarısız!");
+            }
+            return new SuccessDataResult<List<OrderDetailDto>>(datas, "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<SiparisDetay>> GetByIdAsync(int id)

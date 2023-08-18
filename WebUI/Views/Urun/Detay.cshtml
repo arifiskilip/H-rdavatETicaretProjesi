@@ -1,4 +1,5 @@
-﻿@model ProductDetailPageModel
+﻿@using DataAccess.Helpers;
+@model ProducutListPageModel
 
 @{
     TempData["Title"] = "Ürün Detayı";
@@ -14,16 +15,16 @@
                     <div class="product-body mt-5">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb text-center text-lg-left">
-                                <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                                <li class="breadcrumb-item"><a href="#">Urunler</a></li>
-                                <li class="breadcrumb-item" aria-current="page"><a href="#">@Model.UrunDto.Data.KategoriAdi</a></li>
-                                <li class="breadcrumb-item"><a href="#">@Model.UrunDto.Data.Ad</a></li>
+                                <li class="breadcrumb-item">Anasayfa</li>
+                                <li class="breadcrumb-item">Urunler</li>
+                                <li class="breadcrumb-item" aria-current="page">@Model.UrunDto.Data.KategoriAdi</li>
+                                <li class="breadcrumb-item">@Model.UrunDto.Data.Ad</li>
                             </ol>
                         </nav>
                         <div class="pro-detail-sec row">
                             <div class="col-12">
                                 <h4 class="pro-heading text-center text-lg-left">@Model.UrunDto.Data.Ad</h4>
-                                <p class="pro-text text-center text-lg-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. @Model.UrunDto.Data.Kod</p>
+                                <p class="pro-text text-center text-lg-left">@Model.UrunDto.Data.Kod</p>
                             </div>
                         </div>
                         <div class="row product-list product-detail">
@@ -50,16 +51,27 @@
                             <div class="col-12 col-lg-6 text-center text-lg-left">
                                 <div class="product-single-price">
                                     <h4><span class="real-price">@Model.UrunDto.Data.ListeFiyat ₺</span> <span><del>@Model.UrunDto.Data.ListeFiyat ₺</del></span></h4>
-                                    <p class="pro-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. tellus lacus faucibus lectus.</p>
+                                    <p class="pro-description">@Model.UrunDto.Data.Ad</p>
                                 </div>
 
                                 <div class="product-checklist">
                                     <ul>
+                                        
                                         <li><i class="fas fa-check"></i>Marka : @Model.UrunDto.Data.MaraAdi</li>
                                         <li><i class="fas fa-check"></i>Ürün Kodu: @Model.UrunDto.Data.Kod</li>
-                                        <li><i class="fas fa-check"></i>İskonto: %@Model.UrunDto.Data.Iskonto1</li>
-                                        <li><i class="fas fa-check"></i>Stok Durumu: Var</li>
-                                        <li><i class="fas fa-check"></i>KDV: %20</li>
+                                        <li><i class="fas fa-check"></i>İskonto: %@CalculateHalpers.CalculateIskonto(Model.UrunDto.Data.Id)</li>
+                                        <li><i class="fas fa-check"></i>Stok Durumu: @if (Model.UrunDto.Data.StokDurum == true)
+                                            {
+                                                <text>Var</text>
+                                            }
+                                            else
+                                            {
+                                                <text>Yok</text>
+                                            }
+
+                                        </li>
+
+                                        <li><i class="fas fa-check"></i>KDV: %@CalculateHalpers.CalculateKdv(Model.UrunDto.Data.Id)</li>
 
                                     </ul>
                                 </div>
@@ -68,12 +80,13 @@
 
                                     <div class="qty col-12 col-lg-3 d-lg-flex  align-items-lg-center d-inline-block">
                                         <span class="minus"><i class="las la-minus"></i></span>
-                                        <input type="number" class="count" name="qty" value="1">
+                                        <input type="number" class="count" name="qty" value="1" id="productQuantity">
+                                        
                                         <span class="plus"><i class="las la-plus"></i></span>
                                     </div>
                                     <div class="col-12 col-lg-9">
-                                        <a href="/Member/Urun/Ekle/@Model.UrunDto.Data.Id"> <button class="btn web-btn rounded-pill">Sepete Ekle</button></a>
-                                       
+                                        @*<a href="/Member/Urun/Ekle/@Model.UrunDto.Data.Id"> </a>*@
+                                        <button class="btn web-btn rounded-pill" id="addProductButton">Sepete Ekle</button>
                                     </div>
                                 </div>
 
@@ -86,10 +99,9 @@
                                             <li class="breadcrumb-item"><p class="d-inline">SKU: <span>00012</span></p></li>
                                             <li class="breadcrumb-item"><span class="d-inline">Kategori: <a href="#">Yapı Malzemeleri</a><span class="comma-separtor"></li>
                                         </ol>
+                                        <input type="number" id="productId" value="@Model.UrunDto.Data.Id" style="display:none"/>
                                     </nav>
                                 </div>
-
-
                             </div>
                         </div>
 
@@ -132,29 +144,31 @@
                     foreach (var item in @Model.UrunlerDto.Data)
                     {
                         <div class="item text-center">
+
                             <div class="product">
                                 <div class="product-img">
                                     <img src="~/E-Ticaret/files/img/item1.jpg">
                                     <div class="overlay-img">
                                         <div class="overlay-content">
-                                            <a href="#"><i class="las la-heart"></i></a>
-                                            <a href="#"><i class="las la-shopping-bag"></i></a>
+                                            <a href="/Member/Urun/Ekle/@item.Id"><i class="las la-shopping-bag"></i></a>
                                             <a href="/Urun/Detay/@item.Id"><i class="las la-search"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="product-detail">
-                                    <span class="product-cat">@item.KategoriAdi</span>
-                                    <h4 class="product-name">@item.Ad</h4>
-                                    <span class="fly-line"></span>
-                                    <ul class="reviews">
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                    </ul>
-                                </div>
+                                <a href="/Urun/Detay/@item.Id">
+                                    <div class="product-detail">
+                                        <span class="product-cat">@item.KategoriAdi</span>
+                                        <h4 class="product-name">@item.Ad</h4>
+                                        <span class="fly-line"></span>
+                                        <ul class="reviews">
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                        </ul>
+                                    </div>
+                               </a>
                             </div>
                         </div>
                     }
@@ -169,24 +183,25 @@
                                     <img src="~/E-Ticaret/files/img/item1.jpg">
                                     <div class="overlay-img">
                                         <div class="overlay-content">
-                                            <a href="#"><i class="las la-heart"></i></a>
-                                            <a href="#"><i class="las la-shopping-bag"></i></a>
+                                            <a href="/Member/Urun/Ekle/@Model.UrunlerDto.Data[i].Id"><i class="las la-shopping-bag"></i></a>
                                             <a href="/Urun/Detay/@Model.UrunlerDto.Data[i].Id"><i class="las la-search"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="product-detail">
-                                    <span class="product-cat">@Model.UrunlerDto.Data[i].KategoriAdi</span>
-                                    <h4 class="product-name">@Model.UrunlerDto.Data[i].Ad</h4>
-                                    <span class="fly-line"></span>
-                                    <ul class="reviews">
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                        <li><i class="las la-star"></i></li>
-                                    </ul>
-                                </div>
+                                <a href="/Urun/Detay/@Model.UrunlerDto.Data[i].Id">
+                                    <div class="product-detail">
+                                        <span class="product-cat">@Model.UrunlerDto.Data[i].KategoriAdi</span>
+                                        <h4 class="product-name">@Model.UrunlerDto.Data[i].Ad</h4>
+                                        <span class="fly-line"></span>
+                                        <ul class="reviews">
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                            <li><i class="las la-star"></i></li>
+                                        </ul>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     }
@@ -201,3 +216,61 @@
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#addProductButton').click(function () {
+            var productId = $('#productId').val();
+            var productQuantity = $('#productQuantity').val();
+            console.log(productId,productQuantity);
+
+            if (productId && productQuantity) {
+                // Ürünü sepete eklemek için AJAX isteği gönderiyoruz
+                $.ajax({
+                    url: '/Member/Urun/UrunAdetEkle', // Action metodunun yolunu buraya ekleyin
+                    type: 'POST',
+                    data: { id: productId, quantity: productQuantity }, // Ürün ID'sini de gönderiyoruz
+                    success: function (result) {
+                        console.log(result);
+                        if (result.success) {
+                            alert(result.message);
+                            window.location.href = "/Urun/Detay/" + productId;
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Sipariş oluşturabilmek için lütfen sisteme giriş yapın.');
+                        window.location.href = "/Hesap/Giris";
+                    }
+                });
+            } else {
+                alert('Adet alanını doldurun.');
+            }
+        });
+    });
+    $(document).ready(function () {
+      
+        $(".minus").click(function () {
+            var input = $(this).next(".count"); // Tıklanan etiketin hemen sonrasındaki input alanını bul
+            var value = parseInt(input.val()); // Mevcut değeri al
+            if (value > 1) { 
+                input.val(value - 1);
+            }
+        });
+
+        // Arttırma (plus) işlemi
+        $(".plus").click(function () {
+            var input = $(this).prev(".count"); // Tıklanan etiketin hemen öncesindeki input alanını bul
+            var value = parseInt(input.val()); // Mevcut değeri al
+            input.val(value + 1); // Değeri 1 arttır
+        });
+    });
+</script>
+
+
+
+
+
+

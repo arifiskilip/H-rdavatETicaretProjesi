@@ -18,20 +18,21 @@ namespace WebUI.ViewComponents.Default
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            ProducutListPageModel model = new ProducutListPageModel();
             if (User.Identity.IsAuthenticated)
             {
                 var userId = Convert.ToInt32(TempData["UserId"]);
                 var result = _sepetDal.GetItems(userId);
-                ProducutListPageModel model = new ProducutListPageModel();
+               
                 if (result.Count>0)
                 {
                     ViewBag.totalPrice = _sepetDal.CalculateTotal(userId);
                     model.Sepet = result;
                     return View(model);
                 }
-                return View();
+                return View(model);
             }
-            return View();
+            return View(model);
         }
 
     }

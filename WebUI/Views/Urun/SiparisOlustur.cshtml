@@ -1,0 +1,205 @@
+﻿@using DataAccess.Concrete;
+@using Entities.Concrete;
+@model List<Sepet>
+@{
+    SepetDal sepetDal = new SepetDal();
+}
+@*Modal*@
+<div class="modal" id="onayModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Onay</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Sipariş oluşturmak istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hayır</button>
+                <button type="button" class="btn btn-primary" id="onayButton">Evet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about_content padding-top padding-bottom" style="margin-top: 20px;">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-10  text-center text-lg-left wow slideInUp" data-wow-duration="2s" style="visibility: visible; animation-duration: 2s; animation-name: slideInUp;">
+                <h1 class="heading">Sepet - Kontrol</h1>
+                <p class="para_text">Ürünlerinizi son kez kontrol ettikten sonra ödemenizi güvenle yapabilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- START SHOP CART SECTION -->
+    <div class="shop-cart wow slideInUp" data-wow-duration="2s" style="visibility: visible; animation-duration: 2s; animation-name: slideInUp;">
+        <div class="container">
+            <!-- START SHOP CART TABLE -->
+            <div class="row pt-5">
+                <div class="col-12 col-md-12  cart_table wow fadeInUp" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
+                    
+                        @if (Model != null)
+                        {
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-radius">
+                                <thead>
+                                    <tr>
+                                        <th class="darkcolor">Ürün</th>
+                                        <th class="darkcolor">Fiyat</th>
+                                        <th class="darkcolor">Adet</th>
+                                        <th class="darkcolor">Toplam Tutar</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-table product-detail-cart">
+                                                    <div class="media">
+                                                        <div class="row no-gutters">
+
+                                                            <div class="col-12 col-lg-2 product-detail-cart-image">
+                                                                <a class="shopping-product" href="javascript:void(0)"><img src="img/item1.jpg" alt="Generic placeholder image"></a>
+                                                            </div>
+
+                                                            <div class="col-12 col-lg-10 mt-auto mb-auto product-detail-cart-data">
+                                                                <div class="media-body ml-lg-3">
+                                                                    <h4 class="product-name"><a href="product-detail.html">@item.Urun.Ad</a></h4>
+                                                                    <p class="product-des">@item.Urun.Kod</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h4 class="text-center amount">
+                                                    @sepetDal.KdvAmount(item.UrunId) ₺
+                                                </h4>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="quote text-center mt-1">
+                                                    <input id="productQuantity" type="number" placeholder="1" class="quote adet-input" min="1" max="500" value="@item.Adet" data-id="@item.UrunId">
+                                                    
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h4 class="text-center amount">
+                                                    @if (item.Adet > 1)
+                                                    {
+                                                        var result = sepetDal.KdvAmount(item.UrunId) * item.Adet;
+                                                        <text>@Math.Round((double)result,2)</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>@sepetDal.KdvAmount(item.UrunId)</text>
+                                                    }₺
+                                                </h4>
+                                            </td>
+                                            <td class="text-center guncelle-button" data-id="@item.UrunId"><a class="btn-close" href="javascript:void(0)"><i class="las la-edit"></i></a>
+
+                                        </td>
+                                            <td class="text-center deleteproduct" data-id="@item.Urun.Id"><a class="btn-close" href="javascript:void(0)"><i class="las la-trash"></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                               </div>
+                    <div class="apply_coupon">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                    <h5 class="mr-3">Toplam Tutar: @ViewBag.totalPrice ₺</h5>
+                            </div>
+                            <div class="col-12 text-right mt-3">
+                                    <button id="createOrder" class="btn web-btn rounded-pill">SİPARİŞİ TAMAMLA</button>
+                            </div>
+                        </div>
+                    </div>
+                        }               
+                    else
+                    {
+                    <div class="alert alert-info">Lütfen sepete ürün ekleyin.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SHOP CART SECTION-->
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".guncelle-button").click(function () {
+            var id = $(this).data("id");
+            var adet = $(".adet-input[data-id='" + id + "']").val();
+            $.ajax({
+                url: "/Urun/Guncelle",
+                type: "POST",
+                data: { id: id, adet: adet },
+                success: function () {
+                    alert("Güncelemme işlemi başarılı!");
+                    window.location.href = "/Urun/SiparisOlustur";
+                    location.reload();
+                },
+                error: function () {
+                    alert("Hata oluştu, lütfen tekrar deneyin.");
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".deleteproduct").on("click", function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            console.log(id);
+            $("#deleteCart").attr("href", "/Urun/SiparisOlustur");
+            $("#confirmationModal").modal("show");
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Ürün ekleme formu submit işlemi
+        $("#createOrder").click(function () {
+            $("#onayModal").modal("show"); // Onay modalını aç
+            alertify.success('Ok');
+        });
+        $("#onayButton").click(function () {
+            $.ajax({
+                url: "/Urun/CreateOrderSendDb",
+                type: "POST",
+                success: function (result) {
+                    if(result.success){
+                        alert("Siparişiniz başarıyla oluşturuldu!");
+                        window.location.href = "/AnaSayfa/Index";
+                    }
+                    else{
+                        alert("Hata oluştu, lütfen tekrar deneyin.");
+                    }
+                   
+                },
+                error: function () {
+                    alert("Hata oluştu, lütfen tekrar deneyin.");
+                }
+            });
+        });
+
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js" integrity="sha512-JnjG+Wt53GspUQXQhc+c4j8SBERsgJAoHeehagKHlxQN+MtCCmFDghX9/AcbkkNRZptyZU4zC8utK59M5L45Iw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

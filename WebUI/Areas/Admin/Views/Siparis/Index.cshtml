@@ -1,0 +1,256 @@
+﻿@using Entities.Concrete;
+@using Entities.Enums;
+@model IDataResult<List<OrderDto>>
+@{
+    TempData["Title"] = "Tüm Siparişler";
+}
+<div class="card m-5">
+    <div class="card-body">
+        <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container row">
+                            <div class="col-md-8">
+                                <label>İndirim Oranı : </label>
+
+                                <input type="number" min="0" class="discount" />
+
+
+                            </div>
+                            <div class="col-md-4">
+                                <button id="discountCanceled" class="btn btn-danger" style="margin-top:20px;">İndirim İptal</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-success modalGuncelleButton">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="confirmOrderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>İlgili siparişi tamamlamak istiyormusunuz ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-success modalConfirmOrder">Tamamla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="canceledOrderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>İlgili siparişi iptal etmek istiyormusunuz ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-danger modalCanceledOrder">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th><p>Siparis Id</p></th>
+                        <th>Müşteri Adı</th>
+                        <th>Şirket</th>
+                        <th>İletişim</th>
+                        <th>Siparis Tarihi</th>
+                        <th>Toplam Fiyat</th>
+                        <th>Kdv Tutarı</th>
+                        <th>İndirim</th>
+                        <th>Fatura Tutarı</th>
+                        <th>Durumu</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Data.Count > 0)
+                    {
+                        @foreach (var item in Model.Data)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.MusteriAdi</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.Telefon</td>
+                                <td>@item.Tarih</td>
+                                <td>@item.ToplamFiyat ₺</td>
+                                <td>@item.KDVTutar </td>
+                                <td>@item.Indirim</td>
+                                <td>@item.FaturaTutari ₺</td>
+                                <td>
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda)
+                                    {
+                                        <text><div class="badge badge-warning badge-pill">Yolda</div></text>
+                                    }
+                                    else if (item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
+                                    {
+                                        <text><div class="badge badge-primary badge-pill">Tamamlandı</div></text>
+                                    }
+                                    else
+                                    {
+                                        <text><div class="badge badge-danger badge-pill">İptal</div></text>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/Admin/Siparis/Detay/@item.Id">
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                    </a>
+                                    <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-tag" aria-hidden="true"></i></button>
+                                </td>
+                                <td>
+                                    <button class="confirmOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                    <button class="canceledOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">İlgili siparişiniz bulunmamaktadır.</div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".indirimEkle").click(function () {
+            var orderId = $(this).data("siparis-id");
+            console.log(orderId);
+            $("#confirmationModal").modal("show"); // Modalı görüntüle
+
+            $(".modalGuncelleButton").off("click").on("click", function () {
+                var discount = $("#confirmationModal .discount").val();
+                $.ajax({
+                    url: "/Admin/Siparis/AddDiscountToOrder", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        orderId: orderId,
+                        discount: discount
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu!");
+                    }
+                });
+
+                $("#confirmationModal").modal("hide"); // Modalı kapat
+            });
+
+            $("#discountCanceled").click(function () {
+                console.log(orderId);
+                $.ajax({
+                    url: "/Admin/Siparis/DiscountCanceled", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        orderId: orderId,
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu!");
+                    }
+                });
+            });
+        });
+        $(".confirmOrder").click(function () {
+            var orderId = $(this).data("siparis-id");
+            $("#confirmOrderModal").modal("show"); // Modalı görüntüle
+            $(".modalConfirmOrder").off("click").on("click", function () {
+                $.ajax({
+                    url: "/Admin/Siparis/ConfirmOrder", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        orderId: orderId,
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                            $("#confirmOrderModal").modal("hide");
+                        }
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu!");
+                    }
+                });
+            });
+        });
+        $(".canceledOrder").click(function () {
+            var orderId = $(this).data("siparis-id");
+            $("#canceledOrderModal").modal("show"); // Modalı görüntüle
+            $(".modalCanceledOrder").off("click").on("click", function () {
+                $.ajax({
+                    url: "/Admin/Siparis/CanceledOrder", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        orderId: orderId,
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                            $("#confirmOrderModal").modal("hide");
+                        }
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu!");
+                    }
+                });
+            });
+        });
+    });
+
+</script>

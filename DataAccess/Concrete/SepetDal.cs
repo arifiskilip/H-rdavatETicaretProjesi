@@ -38,24 +38,8 @@ namespace DataAccess.Concrete
                 double totalPrice = 0;
                 foreach (var item in baskets)
                 {
-                    double unitPrice = (double)item.Urun.ListeFiyat;
-                    if (item.Urun.Kdv != null)
-                    {
-                        unitPrice = unitPrice + ((double)item.Urun.ListeFiyat * (int)item.Urun.Kdv / 100);
-                    }
-                    if (item.Urun.Iskonto1 != null)
-                    {
-                        unitPrice = unitPrice + ((double)item.Urun.ListeFiyat * (int)item.Urun.Iskonto1 / 100);
-                    }
-                    if (item.Urun.Iskonto2 != null)
-                    {
-                        unitPrice = unitPrice + ((double)item.Urun.ListeFiyat * (int)item.Urun.Iskonto2 / 100);
-                    }
-                    if (item.Urun.Iskonto3 != null)
-                    {
-                        unitPrice = unitPrice + ((double)item.Urun.ListeFiyat * (int)item.Urun.Iskonto3 / 100);
-                    }
-                    totalPrice += unitPrice;
+                
+                    totalPrice += (KdvAmount(item.UrunId) * (int)item.Adet);
                 }
 
                 return Math.Round(totalPrice,2);
@@ -95,15 +79,15 @@ namespace DataAccess.Concrete
                 }
                 if (item.Iskonto1 != null)
                 {
-                    totalPrice = totalPrice + ((double)item.ListeFiyat * (int)item.Iskonto1 / 100);
+                    totalPrice = totalPrice - ((double)item.ListeFiyat * (int)item.Iskonto1 / 100);
                 }
                 if (item.Iskonto2 != null)
                 {
-                    totalPrice = totalPrice + ((double)item.ListeFiyat * (int)item.Iskonto2 / 100);
+                    totalPrice = totalPrice - ((double)item.ListeFiyat * (int)item.Iskonto2 / 100);
                 }
                 if (item.Iskonto3 != null)
                 {
-                    totalPrice = totalPrice + ((double)item.ListeFiyat * (int)item.Iskonto3 / 100);
+                    totalPrice = totalPrice - ((double)item.ListeFiyat * (int)item.Iskonto3 / 100);
                 }
                 return Math.Round(totalPrice,2);
             }
@@ -133,6 +117,23 @@ namespace DataAccess.Concrete
                     existingItem.Adet -= 1;
                 }
                 context.SaveChanges();
+            }
+        }
+
+        public int CalculateKdv(int memberId)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var baskets = context.Sepet.Include(x=> x.Urun).Where(x => x.MusteriId == memberId).ToList();
+                var result = 0;
+                foreach (var item in baskets)
+                {
+                    if (item.Urun.Kdv != null)
+                    {
+                        result += (int)item.Urun.Kdv;
+                    }
+                }
+                return result;
             }
         }
     }
