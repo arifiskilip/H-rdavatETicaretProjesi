@@ -15,7 +15,6 @@ namespace DataAccess.Concrete
         public UrunDal(HirdavatContext hirdavatContext) : base(hirdavatContext)
         {
         }
-
         public  UrunDto GetProductDto(int id)
         {
             using (HirdavatContext context = new HirdavatContext())

@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Areas.Admin.Models;
 
@@ -31,7 +32,12 @@ namespace WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                Kategori category = new()
+				if (_kategoriService.GetAllAsync().Result.Data.Any(x => x.Ad == model.Ad))
+				{
+					ModelState.AddModelError("", $"{model.Ad} zaten kullanılıyor.");
+					return View(model);
+				}
+				Kategori category = new()
                 {
                     Ad = model.Ad,
                 };

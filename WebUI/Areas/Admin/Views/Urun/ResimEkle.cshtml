@@ -101,10 +101,24 @@
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
-                        window.location.reload();
-                        alert(response.message);
+                        Swal.fire({
+                            title: 'Başarılı!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'Tamam'
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload(); // Sayfayı yeniden yükle
+                            }
+                        });
                     } else {
-                        alert(response.message);
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 },
                 error: function () {
@@ -124,15 +138,34 @@
                     },
                     success: function (data) {
                         if (data.success) {
-                            window.location.reload();
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
                         } else {
-                            alert(data.message);
+                             Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                             $("#confirmationModal").modal("hide");
                         }
                     },
                     error: function () {
-                        alert("Bir hata oluştu!");
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 });
             });

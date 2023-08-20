@@ -125,11 +125,20 @@
                                     <a href="/Admin/Siparis/Detay/@item.Id">
                                         <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
                                     </a>
-                                    <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-tag" aria-hidden="true"></i></button>
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
+                                    {
+                                        <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-tag" aria-hidden="true"></i></button>
+                                    }
                                 </td>
                                 <td>
-                                    <button class="confirmOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.İptalEdildi)
+                                    {
+                                        <button class="confirmOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                    }
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
+                                    {
                                     <button class="canceledOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -165,14 +174,33 @@
                     },
                     success: function (data) {
                         if (data.success) {
-                            window.location.reload();
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
                         } else {
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
                         }
                     },
                     error: function () {
-                        alert("Bir hata oluştu!");
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 });
 
@@ -180,7 +208,6 @@
             });
 
             $("#discountCanceled").click(function () {
-                console.log(orderId);
                 $.ajax({
                     url: "/Admin/Siparis/DiscountCanceled", // Urun güncelleme Action metodunun URL'si
                     type: "POST",
@@ -189,14 +216,34 @@
                     },
                     success: function (data) {
                         if (data.success) {
-                            window.location.reload();
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
                         } else {
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                            $('#confirmationModal').modal('hide');
                         }
                     },
                     error: function () {
-                        alert("Bir hata oluştu!");
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 });
             });
@@ -213,15 +260,34 @@
                     },
                     success: function (data) {
                         if (data.success) {
-                            window.location.reload();
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
                         } else {
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
                             $("#confirmOrderModal").modal("hide");
                         }
                     },
                     error: function () {
-                        alert("Bir hata oluştu!");
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 });
             });
@@ -238,15 +304,34 @@
                     },
                     success: function (data) {
                         if (data.success) {
-                            window.location.reload();
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
                         } else {
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
                             $("#confirmOrderModal").modal("hide");
                         }
                     },
                     error: function () {
-                        alert("Bir hata oluştu!");
+                         Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 });
             });

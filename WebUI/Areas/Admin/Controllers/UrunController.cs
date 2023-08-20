@@ -54,7 +54,17 @@ namespace WebUI.Areas.Admin.Controllers
             model.Kategoriler = new SelectList(categories.Data, "Id", "Ad");
             if (ModelState.IsValid)
             {
-                Urun urun = new()
+				if (_urunService.GetAllAsync().Result.Data.Any(x => x.Ad == model.Ad))
+				{
+					ModelState.AddModelError("", $"{model.Ad} zaten kullanılıyor.");
+					return View(model);
+				}
+				if (_urunService.GetAllAsync().Result.Data.Any(x => x.Kod == model.Kod))
+				{
+					ModelState.AddModelError("", $"{model.Kod} zaten kullanılıyor.");
+					return View(model);
+				}
+				Urun urun = new()
                 {
                     Ad = model.Ad,
                     Iskonto1 = model.Iskonto1,

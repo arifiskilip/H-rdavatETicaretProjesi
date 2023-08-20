@@ -1,11 +1,14 @@
 ﻿using Business.Abstract;
+using Business.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Contexts;
+using Entities.Concrete;
 using Entities.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -98,23 +101,65 @@ namespace WebUI.Controllers
             }
             return View();
         }
+        public IActionResult UrunAra()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UrunAra(string searchTerm)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var searchResult = context.Urun.Where(u=> u.Ad.Contains(searchTerm) || context.Marka.Any(m=> m.Id == u.MarkaId && m.Ad.Contains(searchTerm)) ||
+                context.Kategori.Any(k => k.Id == u.KategoriId && k.Ad.Contains(searchTerm))).ToList();
+                IDataResult<List<Urun>> dataResult;
+                if (searchResult.Count>0)
+                {
+                     dataResult = new SuccessDataResult<List<Urun>>(searchResult, "Listeleme işlemi başarılı.");
+                }
+                else
+                {
+                     dataResult = new ErrorDataResult<List<Urun>>(searchResult, "Listeleme işlemi başarısız.");
+                }
+                ProducutListPageModel model = new()
+                {
+                    BrandResult = await _markaService.GetAllAsync(),
+                    CategoryResult = await _kategoriService.GetAllAsync(),
+                    ProductResult = dataResult
+                };
+                return View(model);
+
+            }
+        }
 
 
         //jquery
         [HttpPost]
         public JsonResult Guncelle(int id, int adet)
         {
-            using (HirdavatContext context = new HirdavatContext())
+            try
             {
-                var sepetUrun = context.Sepet.FirstOrDefault(x => x.UrunId == id);
-                if (sepetUrun != null)
+                using (HirdavatContext context = new HirdavatContext())
                 {
-                    sepetUrun.Adet = adet;
-                    context.SaveChanges();
-                    return Json(new { success = true });
+                    if (adet >= 1)
+                    {
+                        var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                        var sepetUrun = context.Sepet.FirstOrDefault(x => x.UrunId == id && x.MusteriId == userId);
+                        if (sepetUrun != null)
+                        {
+                            sepetUrun.Adet = adet;
+                            context.SaveChanges();
+                            return Json(new { success = true, message = "Güncelleme işlemi başarılı." });
+                        }
+                    }
+                    return Json(new { success = false, message = "Lütfen adet miktarını kontrol edin." });
                 }
             }
-            return Json(new { success = false });
+            catch (Exception)
+            {
+
+                return Json(new { success = true, message = "İşlem sırasında bir hata meydana geldi." });
+            }
         }
         [Authorize(Roles = "Member")]
         [HttpPost]
@@ -168,5 +213,6 @@ namespace WebUI.Controllers
 
         
         }
+
     }
 }

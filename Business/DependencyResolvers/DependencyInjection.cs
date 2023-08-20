@@ -32,6 +32,8 @@ namespace Business.DependencyResolvers
             services.AddScoped<ISiparisDurumService, SiparisDurumManager>();
             services.AddScoped<IUrunDal, UrunDal>();
             services.AddScoped<IUrunService, UrunManager>();
+            services.AddScoped<IUrunResimDal, UrunResimDal>();
+            services.AddScoped<IUrunResimService, UrunResimManager>();
             services.AddScoped<IAuthService, AuthManager>();
             services.AddScoped<IRolDal, RolDal>();
             services.AddScoped<IRolService, RolManager>();

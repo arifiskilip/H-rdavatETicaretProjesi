@@ -2,6 +2,7 @@
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Areas.Admin.Models;
 
@@ -32,6 +33,11 @@ namespace WebUI.Areas.Admin.Controllers
         {    
             if (ModelState.IsValid)
             {
+                if (_markaService.GetAllAsync().Result.Data.Any(x=> x.Ad == model.Ad))
+                {
+                    ModelState.AddModelError("", $"{model.Ad} zaten kullanılıyor.");
+					return View(model);
+				}
                 Marka marka = new()
                 {
                     Ad = model.Ad,  

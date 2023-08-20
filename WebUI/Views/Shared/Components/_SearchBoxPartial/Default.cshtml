@@ -1,0 +1,12 @@
+﻿<div class="search_block">
+    <div class="search_box animated wow fadeInUp d-flex justify-content-center align-items-center">
+        <div class="inner">
+            <form asp-controller="Urun" asp-action="UrunAra" method="post">
+                <input type="text" name="searchTerm" id="search" class="search_input" autocomplete="off"
+                       placeholder="Enter Your Keywords.." />
+                <button id="searchButton" type="submit" class="search_icon glyphicon glyphicon-search"><i class="fas fa-search"></i> </button>
+            </form>
+        </div>
+    </div>
+    <div class="search-overlay"></div>
+</div>

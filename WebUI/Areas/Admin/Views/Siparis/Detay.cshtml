@@ -5,7 +5,7 @@
 @model IDataResult<List<OrderDetailDto>>
 @{
     TempData["Title"] = "Tüm Detay";
-    SepetDal sepetDal = new SepetDal(); 
+    SepetDal sepetDal = new SepetDal();
 }
 
 
@@ -58,7 +58,8 @@
                             <tr>
                                 <td>@item.UrunKod</td>
                                 <td>@item.UrunIsım</td>
-                                <td>@item.UrunMarka
+                                <td>
+                                    @item.UrunMarka
                                 </td>
                                 <td>@item.TalepAdet</td>
                                 <td>@item.TeslimAdet </td>
@@ -70,7 +71,7 @@
                                 {
                                     <td><button class="guncelleButon btn btn-outline-primary" data-urun-id="@item.Id">Yeni Teslim Adeti</button></td>
                                 }
-                          
+
                             </tr>
 
                         }
@@ -103,14 +104,34 @@
                     },
                     success: function (data) {
                         if (data.success) {
-                            window.location.reload();
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
+
                         } else {
-                            alert(data.message);
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
                         }
                     },
                     error: function () {
-                        alert("Bir hata oluştu!");
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
                     }
                 });
 

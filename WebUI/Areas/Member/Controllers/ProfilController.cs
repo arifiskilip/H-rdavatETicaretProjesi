@@ -20,12 +20,14 @@ namespace WebUI.Areas.Member.Controllers
         private readonly IIlceService _ılceService;
         private readonly IIlService _ılService;
         public readonly IMusteriService _musteriService;
+        private readonly IAuthService _authService;
 
-        public ProfilController(IIlceService ılceService, IIlService ılService, IMusteriService musteriService)
+        public ProfilController(IIlceService ılceService, IIlService ılService, IMusteriService musteriService, IAuthService authService)
         {
             _ılceService = ılceService;
             _ılService = ılService;
             _musteriService = musteriService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -80,7 +82,21 @@ namespace WebUI.Areas.Member.Controllers
                     getUser.Data.IlceId = model.IlceId;
                 }
                 getUser.Data.IlId = model.IlId;
-                getUser.Data.Telefon = model.Telefon;
+                var checkPhone = _authService.UserExists(model.Telefon);
+                if (getUser.Data.Telefon == model.Telefon)
+                {
+                    getUser.Data.Telefon = model.Telefon;
+                }
+                else if (checkPhone.Succes)
+                {
+                    getUser.Data.Telefon = model.Telefon;
+                }
+                else
+                {
+                    ModelState.AddModelError("", checkPhone.Message); 
+                    return View(model);
+                }
+                
 
                 var updatedUser = await _musteriService.UpdateAsync(getUser.Data);
                 if (!updatedUser.Succes)

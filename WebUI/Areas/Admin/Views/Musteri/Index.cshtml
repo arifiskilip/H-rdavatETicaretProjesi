@@ -1,0 +1,228 @@
+﻿@using Business.Utilities.Helpers;
+@model List<UserDto>
+@{
+    TempData["Title"] = "Müşteriler";
+}
+<div class="card m-5">
+    <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container row">
+                        <div class="col-md-8">
+                            <label>Yeni Şifre : </label>
+
+                            <input type="text" class="password" />
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                    <button class="btn btn-success modalGuncelleButton">Güncelle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="userDeleteModule" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Silmek istediğinizden emin misiniz?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                    <a id="deleteLink" href="#" class="btn btn-danger">Sil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th><p>Id</p></th>
+                        <th>Müşteri Adı</th>
+                        <th>Firma Adı</th>
+                        <th>Resim</th>
+                        <th>Il</th>
+                        <th>Ilce</th>
+                        <th>Telefon</th>
+                        <th>Adres</th>
+                        <th>Sisteme Kayıt Tarihi</th>
+                        <th>Detay</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Ad @item.Soyad</td>
+                                <td>@item.FirmaAd</td>
+                                <td><img src="@item.Resim" style="border-radius:50px; height:100px; width:100px; border:1px solid #999;" /></td>
+                                <td>
+                                    @if (item.IlId != null)
+                                    {
+                                        @UserHelper.GetCity((int)item.IlId)
+                                    }
+                                    else
+                                    {
+                                        <text>Belirtilmemiş</text>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.IlceId != null)
+                                    {
+                                        @UserHelper.GetDistrict((int)item.IlceId)
+                                    }
+                                    else
+                                    {
+                                        <text>Belirtilmemiş</text>
+                                    }
+                                </td>
+                                <td>@item.Telefon </td>
+                                <td>@item.Adres</td>
+                                <td>@item.CreateDate</td>
+                                <td>
+                                    <a href="/Admin/Musteri/SiparisDetay/@item.Id">
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                    </a>
+                                </td>
+                                <td>
+
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-lock changePassword" data-id="@item.Id" aria-hidden="true"></i></button>
+
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-remove deleteUser" data-id="@item.Id" aria-hidden="true"></i></button>
+
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                    else
+                    {
+
+                        <div class="alert alert-info">İlgili kayıt bulunmamaktadır.</div>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $(".changePassword").click(function () {
+            var userId = $(this).data("id");
+            $("#confirmationModal").modal("show");
+            $(".modalGuncelleButton").off("click").on("click", function () {
+                var password = $("#confirmationModal .password").val();
+                $.ajax({
+                    url: "/Admin/Musteri/ChangePassword", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        userId: userId,
+                        password: password
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
+                        } else {
+                             Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+
+                $("#confirmationModal").modal("hide"); // Modalı kapat
+            });
+        });
+        $(".deleteUser").click(function () {
+            var userId = $(this).data("id");
+            $("#userDeleteModule").modal("show");
+            $("#deleteLink").off("click").on("click", function () {
+                $.ajax({
+                    url: "/Admin/Musteri/DeleteUser", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        userId: userId,
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+
+                $("#userDeleteModule").modal("hide"); // Modalı kapat
+            });
+        });
+    });
+</script>

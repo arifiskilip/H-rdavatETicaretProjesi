@@ -59,9 +59,9 @@ namespace Business.Concrete
             return new ErrorDataResult<Musteri>($"{id}'li veri mevcut değil!");
         }
 
-        public Musteri GetByMail(string email)
+        public Musteri GetByPhone(string phone)
         {
-            return _musteriDal.GetAllAsync(u => u.Email == email,false).Result.FirstOrDefault();
+            return _musteriDal.GetAllAsync(u => u.Telefon == phone,false).Result.FirstOrDefault();
         }
 
         public async Task<IResult> UpdateAsync(Musteri entity)

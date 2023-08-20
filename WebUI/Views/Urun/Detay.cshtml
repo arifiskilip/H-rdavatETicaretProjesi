@@ -1,16 +1,19 @@
-﻿@using DataAccess.Helpers;
+﻿@using Business.Utilities.Helpers;
+@using DataAccess.Helpers;
 @model ProducutListPageModel
 
 @{
     TempData["Title"] = "Ürün Detayı";
 }
 
+
+
 <div class="about_content padding-top padding-bottom" style="margin-top: 150px!important;">
     <div class="container">
         <div class="row">
             <div class="col-12">
 
-               @if (Model.UrunDto.Succes)
+                @if (Model.UrunDto.Succes)
                 {
                     <div class="product-body mt-5">
                         <nav aria-label="breadcrumb">
@@ -33,16 +36,47 @@
                                 <div class="wrapper">
                                     <div class="Gallery swiper-container img-magnifier-container" id="gallery">
                                         <div class="swiper-wrapper myimgs">
-                                            <div class="swiper-slide"> <a href="~/E-Ticaret/files/img/item1.jpg" data-fancybox="1" title="Zoom In"><img class="myimage" src="~/E-Ticaret/files/img/item1.jpg" alt="gallery" /></a></div>
-                                            <div class="swiper-slide"> <a href="~/E-Ticaret/img/item1.jpg" data-fancybox="2" title="Zoom In"><img class="myimage" src="~/E-Ticaret/files/img/item2.jpg" alt="thumnails" /></a></div>
-                                            <div class="swiper-slide"> <a href="~/E-Ticaret/files/img/item1.jpg" data-fancybox="3" title="Zoom In"><img class="myimage" src="~/E-Ticaret/files/img/item3.jpg" alt="thumnails" /></a></div>
+                                            @{
+                                                var images = GetImageHelper.GetProductImagesById(Model.UrunDto.Data.Id);
+                                                if (images.Count>0)
+                                                {
+                                                    <div class="swiper-slide"> <a href="@images[0].ResimYol" data-fancybox="1" title="Zoom In"><img class="myimage" src="@images[0].ResimYol" alt="gallery" /></a></div>
+                                                    for (int i = 1; i < images.Count(); i++)
+                                                    {
+                                                        <div class="swiper-slide"> <a href="@images[i].ResimYol" data-fancybox="@{int a=i+1;<text>@a</text>}1" title="Zoom In"><img class="myimage" src="@images[i].ResimYol" alt="thumnails" /></a></div>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="swiper-slide"> <a href="img/item1.jpg" data-fancybox="1" title="Zoom In"><img class="myimage" src="~/E-Ticaret/files/img/item1.jpg" alt="gallery" /></a></div>
+                                                    <div class="swiper-slide"> <a href="img/item1.jpg" data-fancybox="2" title="Zoom In"><img class="myimage" src="~/E-Ticaret/files/img/item2.jpg" alt="thumnails" /></a></div>
+                                                    <div class="swiper-slide"> <a href="img/item1.jpg" data-fancybox="3" title="Zoom In"><img class="myimage" src="~/E-Ticaret/files/img/item3.jpg" alt="thumnails" /></a></div>
+                                                }
+                                            }
+                                            
                                         </div>
                                     </div>
                                     <div class="Thumbs swiper-container" id="thumbs">
                                         <div class="swiper-wrapper">
+                                            @if (images.Count > 0)
+                                            {
+                                                @foreach (var item in images)
+                                                {
+                                                    <div class="swiper-slide"> <img src="@item.ResimYol" alt="thumnails" /></div>
+                                                }
+                                            }
+
+                                            else{
                                             <div class="swiper-slide"> <img src="~/E-Ticaret/files/img/item1.jpg" alt="thumnails" /></div>
                                             <div class="swiper-slide"> <img src="~/E-Ticaret/files/img/item2.jpg" alt="thumnails" /></div>
                                             <div class="swiper-slide"> <img src="~/E-Ticaret/files/img/item3.jpg" alt="thumnails" /></div>
+                                            }
+                                            
+
+
+                                           
+                     
                                         </div>
                                     </div>
                                 </div>
@@ -56,11 +90,12 @@
 
                                 <div class="product-checklist">
                                     <ul>
-                                        
+
                                         <li><i class="fas fa-check"></i>Marka : @Model.UrunDto.Data.MaraAdi</li>
                                         <li><i class="fas fa-check"></i>Ürün Kodu: @Model.UrunDto.Data.Kod</li>
                                         <li><i class="fas fa-check"></i>İskonto: %@CalculateHalpers.CalculateIskonto(Model.UrunDto.Data.Id)</li>
-                                        <li><i class="fas fa-check"></i>Stok Durumu: @if (Model.UrunDto.Data.StokDurum == true)
+                                        <li>
+                                            <i class="fas fa-check"></i>Stok Durumu: @if (Model.UrunDto.Data.StokDurum == true)
                                             {
                                                 <text>Var</text>
                                             }
@@ -81,7 +116,7 @@
                                     <div class="qty col-12 col-lg-3 d-lg-flex  align-items-lg-center d-inline-block">
                                         <span class="minus"><i class="las la-minus"></i></span>
                                         <input type="number" class="count" name="qty" value="1" id="productQuantity">
-                                        
+
                                         <span class="plus"><i class="las la-plus"></i></span>
                                     </div>
                                     <div class="col-12 col-lg-9">
@@ -99,7 +134,7 @@
                                             <li class="breadcrumb-item"><p class="d-inline">SKU: <span>00012</span></p></li>
                                             <li class="breadcrumb-item"><span class="d-inline">Kategori: <a href="#">Yapı Malzemeleri</a><span class="comma-separtor"></li>
                                         </ol>
-                                        <input type="number" id="productId" value="@Model.UrunDto.Data.Id" style="display:none"/>
+                                        <input type="number" id="productId" value="@Model.UrunDto.Data.Id" style="display:none" />
                                     </nav>
                                 </div>
                             </div>
@@ -114,16 +149,16 @@
                         <div class="pro-detail-sec row">
                             <div class="col-12">
                                 <div class="alert alert-danger">İlgili ürün ne yazık ki bulunamadı.</div>
-                                </div>
-                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 }
 
             </div>
-            
+
         </div>
-      
+
     </div>
 </div>
 <!--START LATEST ARRIVALS-->
@@ -139,7 +174,7 @@
         <div class="best-products-carousel owl-carousel owl-themesss">
             @if (@Model.UrunlerDto.Succes)
             {
-                if (@Model.UrunlerDto.Data.Count<7)
+                if (@Model.UrunlerDto.Data.Count < 7)
                 {
                     foreach (var item in @Model.UrunlerDto.Data)
                     {
@@ -168,7 +203,7 @@
                                             <li><i class="las la-star"></i></li>
                                         </ul>
                                     </div>
-                               </a>
+                                </a>
                             </div>
                         </div>
                     }
@@ -211,8 +246,8 @@
             {
                 <div class="alert alert-danger">Bir hata oluştu.</div>
             }
-            
-        
+
+
         </div>
     </div>
 </section>
@@ -223,7 +258,6 @@
         $('#addProductButton').click(function () {
             var productId = $('#productId').val();
             var productQuantity = $('#productQuantity').val();
-            console.log(productId,productQuantity);
 
             if (productId && productQuantity) {
                 // Ürünü sepete eklemek için AJAX isteği gönderiyoruz
@@ -231,46 +265,64 @@
                     url: '/Member/Urun/UrunAdetEkle', // Action metodunun yolunu buraya ekleyin
                     type: 'POST',
                     data: { id: productId, quantity: productQuantity }, // Ürün ID'sini de gönderiyoruz
-                    success: function (result) {
-                        console.log(result);
-                        if (result.success) {
-                            alert(result.message);
-                            window.location.href = "/Urun/Detay/" + productId;
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "/Urun/Detay/" + productId;
+                                }
+                            });
+                           
                         } else {
-                            alert(result.message);
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
                         }
                     },
                     error: function () {
-                        alert('Sipariş oluşturabilmek için lütfen sisteme giriş yapın.');
-                        window.location.href = "/Hesap/Giris";
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: "Sipariş oluşturabilmek için lütfen sisteme giriş yapınız.",
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/Hesap/Giris";
+                            }
+                        });
+                        
                     }
                 });
             } else {
                 alert('Adet alanını doldurun.');
             }
         });
-    });
-    $(document).ready(function () {
-      
         $(".minus").click(function () {
-            var input = $(this).next(".count"); // Tıklanan etiketin hemen sonrasındaki input alanını bul
+            var input = $('#productQuantity').val();
             var value = parseInt(input.val()); // Mevcut değeri al
-            if (value > 1) { 
+            if (value > 1) {
                 input.val(value - 1);
             }
         });
 
         // Arttırma (plus) işlemi
         $(".plus").click(function () {
-            var input = $(this).prev(".count"); // Tıklanan etiketin hemen öncesindeki input alanını bul
+            var input = $('#productQuantity').val();
             var value = parseInt(input.val()); // Mevcut değeri al
             input.val(value + 1); // Değeri 1 arttır
+            
         });
     });
 </script>
-
-
-
 
 
 

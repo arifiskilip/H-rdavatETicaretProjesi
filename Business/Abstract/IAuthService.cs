@@ -7,6 +7,6 @@ namespace Business.Abstract
     {
         Task<IDataResult<Musteri>> RegisterAsync(Musteri musteri);
         IDataResult<Musteri> Login(Musteri musteri);
-        IResult UserExists(string email);
+        IResult UserExists(string phone);
     }
 }

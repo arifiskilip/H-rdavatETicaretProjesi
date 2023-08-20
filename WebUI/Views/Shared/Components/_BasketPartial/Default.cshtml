@@ -37,7 +37,7 @@
                                     }
                                     ₺
                                 </span>
-                                <button class="deleteproduct" data-id="@item.Urun.Id"><i class="las la-trash"></i> </button>
+                                <a class="deleteproduct basket" data-id="@item.Urun.Id"><i class="las la-trash"></i> </a>
                             </div>
                         </div>
                     }
@@ -49,7 +49,7 @@
         {
             <div class="bag-btn">
                 <h4 class="total"><span>Toplam Tutar: </span>@ViewBag.totalPrice ₺</h4>
-                <a href="/Urun/SiparisOlustur" class="btn web-btn rounded-pill">Ödemeye Geç</a>
+                <a href="/Urun/SiparisOlustur" class="btn web-btn rounded-pill">Sepete Git</a>
             </div>
         }
      
@@ -58,7 +58,7 @@
         {
         <div class="bag-btn">
             <h4 class="total"><span>Toplam Tutar: </span>0 ₺</h4>
-                <a href="/Urun/SiparisOlustur" class="btn web-btn rounded-pill">Ödemeye Geç</a>
+                <a href="/Urun/SiparisOlustur" class="btn web-btn rounded-pill">Sepete Git</a>
         </div>
         }
     </div>

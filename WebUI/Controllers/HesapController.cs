@@ -46,7 +46,7 @@ namespace WebUI.Controllers
             {
                 Musteri musteri = new()
                 {
-                    Email = model.Email,
+                    Telefon = model.Telefon,
                     Sifre = model.Password
                 };
 
@@ -96,10 +96,11 @@ namespace WebUI.Controllers
                 {
                     Ad = model.FirstName,
                     Soyad = model.LastName,
-                    Email = model.Email,
-                    Sifre = model.Password
+                    Telefon = model.Phone,
+                    Sifre = model.Password,
+                    Resim = "/Images/avatar.png"
                 };
-                var emailExist = _authService.UserExists(model.Email);
+                var emailExist = _authService.UserExists(model.Phone);
                 if (emailExist.Succes)
                 {
                     using (HirdavatContext context = new HirdavatContext())
@@ -120,10 +121,10 @@ namespace WebUI.Controllers
             }
             return View(model);
         }
-        public async Task<IActionResult> LogOut()
+        public async Task<IActionResult> CıkısYap()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("AnaSayfa", "Home");
+            return RedirectToAction("Index","AnaSayfa");
         }
     }
 }

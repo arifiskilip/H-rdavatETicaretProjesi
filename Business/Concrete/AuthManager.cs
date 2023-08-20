@@ -21,12 +21,12 @@ namespace Business.Concrete
 
         public IDataResult<Musteri> Login(Musteri musteri)
         {
-            var userToCheck = _musteriService.GetByMail(musteri.Email);
+            var userToCheck = _musteriService.GetByPhone(musteri.Telefon);
             if (userToCheck == null)
             {
                 return new ErrorDataResult<Musteri>("Lütfen bilgilerinizi kontrol edin.");
             }
-            if (userToCheck.Email == musteri.Email && userToCheck.Sifre == musteri.Sifre)
+            if (userToCheck.Telefon == musteri.Telefon && userToCheck.Sifre == musteri.Sifre)
             {
                 return new SuccessDataResult<Musteri>(userToCheck, "Giriş başarılı");
             }
@@ -50,11 +50,11 @@ namespace Business.Concrete
           
         }
 
-        public IResult UserExists(string email)
+        public IResult UserExists(string phone)
         {
-            if (_musteriService.GetByMail(email)!=null)
+            if (_musteriService.GetByPhone(phone) !=null)
             {
-                return new ErrorResult("Böle bir email adresi zaten var!");
+                return new ErrorResult("Böle bir telefon numarası zaten kullanılıyor!");
             }
             return new SuccessResult();
         }

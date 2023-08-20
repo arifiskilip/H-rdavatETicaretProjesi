@@ -29,8 +29,8 @@
                                 <input asp-for="LastName" type="text" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="İskilip">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email Adresi</label>
-                                <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com">
+                                <label for="exampleInputEmail1">Telefon Numarası</label>
+                                <input asp-for="Phone" type="tel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="05555555555">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Şifre</label>
@@ -45,7 +45,7 @@
                             <div class="align-content-center d-flex flex-column align-items-center">
                                 <button type="submit" class="btn btn-primary renkBtn mt-3">Kaydol</button>
                             </div>
-                            <div class="text-alert" asp-validation-summary="All"></div>
+                            <div class="text text-danger" asp-validation-summary="All"></div>
                         </form>
                     </div>
                 </div>

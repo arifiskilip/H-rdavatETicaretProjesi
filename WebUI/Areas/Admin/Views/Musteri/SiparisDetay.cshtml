@@ -1,0 +1,139 @@
+﻿@using Entities.Enums;
+@model IDataResult<List<OrderDto>>
+@{
+    TempData["Title"] = "Sipariş Detay";
+}
+<div class="card m-5">
+    <div class="card-body">
+        <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container row">
+                            <div class="col-md-8">
+                                <label>İndirim Oranı : </label>
+
+                                <input type="number" min="0" class="discount" />
+
+
+                            </div>
+                            <div class="col-md-4">
+                                <button id="discountCanceled" class="btn btn-danger" style="margin-top:20px;">İndirim İptal</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-success modalGuncelleButton">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="confirmOrderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>İlgili siparişi tamamlamak istiyormusunuz ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-success modalConfirmOrder">Tamamla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="canceledOrderModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>İlgili siparişi iptal etmek istiyormusunuz ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <button class="btn btn-danger modalCanceledOrder">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datatable">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th><p>Siparis Id</p></th>
+                        <th>Müşteri Adı</th>
+                        <th>Şirket</th>
+                        <th>İletişim</th>
+                        <th>Siparis Tarihi</th>
+                        <th>Toplam Fiyat</th>
+                        <th>Kdv Tutarı</th>
+                        <th>İndirim</th>
+                        <th>Fatura Tutarı</th>
+                        <th>Durumu</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Data.Count > 0)
+                    {
+                        @foreach (var item in Model.Data)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.MusteriAdi</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.Telefon</td>
+                                <td>@item.Tarih</td>
+                                <td>@item.ToplamFiyat ₺</td>
+                                <td>@item.KDVTutar </td>
+                                <td>@item.Indirim</td>
+                                <td>@item.FaturaTutari ₺</td>
+                                <td>
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda)
+                                    {
+                                        <text><div class="badge badge-warning badge-pill">Yolda</div></text>
+                                    }
+                                    else if (item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
+                                    {
+                                        <text><div class="badge badge-primary badge-pill">Tamamlandı</div></text>
+                                    }
+                                    else
+                                    {
+                                        <text><div class="badge badge-danger badge-pill">İptal</div></text>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/Admin/Siparis/Detay/@item.Id">
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                    </a>
+                                  
+                                </td>                      
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">İlgili siparişiniz bulunmamaktadır.</div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

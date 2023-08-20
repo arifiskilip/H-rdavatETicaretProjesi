@@ -3,8 +3,7 @@ using Entities.Concrete;
 
 namespace Business.Abstract
 {
-    public interface IMusteriService : IGenericService<Musteri>
+    public interface IUrunResimService : IGenericService<UrunResim>
     {
-        Musteri GetByPhone(string phone);
     }
 }

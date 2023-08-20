@@ -1,5 +1,4 @@
-﻿@using Business.Utilities.Helpers;
-@using DataAccess.Helpers;
+﻿@using DataAccess.Helpers;
 @model ProducutListPageModel
 
 @{
@@ -21,16 +20,15 @@
                         <ul>
                             @if (Model.CategoryResult.Succes)
                             {
-                                if (Model.CategoryResult.Data.Count() == 0)
-                                {
-                                    <div class="alert alert-warning">Mevcut Kategori Bulunmamaktadır.</div>
-                                }
                                 @foreach (var item in Model.CategoryResult.Data)
                                 {
                                     <li><a href="/Urun/Kategori/@item.Id">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.KategoriId == item.Id).Count())</span></li>
                                 }
                             }
-                           
+                            else if (Model.CategoryResult.Data.Count() == 0)
+                            {
+                                <div class="alert alert-warning">Mevcut Kategori Bulunmamaktadır.</div>
+                            }
                             else
                             {
                                 <div class="alert alert-danger">@Model.CategoryResult.Message</div>
@@ -40,21 +38,20 @@
                     </div>
                     <div class="product-price mt-5">
                         <h5 class="filter-heading">Marka</h5>
-                        <input class="form-control mr-sm-2" style="border-radius:15px;" type="search" placeholder="Marka Adı" aria-label="Ara">
+                        <input class="form-control mr-sm-2" style="border-radius:15px;" id="aramaInput" type="search" placeholder="Marka Adı" aria-label="Ara">
                         <div class="product-category">
-                            <ul>
+                            <ul id="veriListesi">
                                 @if (Model.BrandResult.Succes)
                                 {
-                                    if (Model.BrandResult.Data.Count() == 0)
-                                    {
-                                        <div class="alert alert-warning">Mevcut Marka Bulunmamaktadır.</div>
-                                    }
                                     @foreach (var item in Model.BrandResult.Data)
                                     {
-                                        <li><a href="/Urun/Marka/@item.Id">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.MarkaId == item.Id).Count())</span></li>
+                                        <li><a href="/Urun/Marka/@item.Id">@item.Ad </a><span>(@Model.ProductResult.Data.Where(x=> x.MarkaId == item.Id).Count())</span></li>
                                     }
                                 }
-                              
+                                else if (Model.BrandResult.Data.Count() == 0)
+                                {
+                                    <div class="alert alert-warning">Mevcut Marka Bulunmamaktadır.</div>
+                                }
                                 else
                                 {
                                     <div class="alert alert-danger">@Model.BrandResult.Message</div>
@@ -79,7 +76,7 @@
                                         <div class="col-4 col-md-6 col-lg-4 col-sm-3 text-center wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
                                             <div class="featured-item-card">
                                                 <div class="item-img">
-                                                    <img src="@GetImageHelper.GetProductImagesById(item.Id)[0].ResimYol" style="width:250px;height: 250px;">
+                                                    <img src="~/E-Ticaret/images/urun1.jpg">
                                                     <div class="item-overlay">
                                                         <div class="item-btns">
                                                             <a href="/Member/Urun/Ekle/@item.Id" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
@@ -94,10 +91,10 @@
                                                         <div class="col-md-7">
                                                             <div style="text-align: start; white-space: nowrap;">
                                                                 <p class="acikrenk">
-                                                                    Ürün Kodu: @item.Kod <br> Marka:            
+                                                                    Ürün Kodu: @item.Kod <br> Marka:
                                                                     @{
                                                                         var brandName = Model.BrandResult.Data.FirstOrDefault(x => x.Id == item.MarkaId);
-                                                                         if (brandName!= null)
+                                                                        if (brandName != null)
                                                                         {
                                                                             @brandName.Ad
                                                                         }
@@ -106,7 +103,7 @@
                                                                             <text>YOK</text>
                                                                         }
                                                                     }
-                                                                    <br>İskonto:%5<br>Stok durumu: @if (item.StokDurum ==true)
+                                                                    <br>İskonto:%5<br>Stok durumu: @if (item.StokDurum == true)
                                                                     {
                                                                         <text>Var</text>
                                                                     }
@@ -163,3 +160,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    const aramaInput = document.getElementById("aramaInput");
+    const veriListesi = document.getElementById("veriListesi").getElementsByTagName("li");
+
+    aramaInput.addEventListener("input", function () {
+        const arananKelime = aramaInput.value.toLowerCase();
+
+        for (let i = 0; i < veriListesi.length; i++) {
+            const veri = veriListesi[i].textContent.toLowerCase();
+
+            if (veri.includes(arananKelime)) {
+                veriListesi[i].style.display = "block";
+            } else {
+                veriListesi[i].style.display = "none";
+            }
+        }
+    });
+</script>
