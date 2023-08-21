@@ -4,6 +4,11 @@
     TempData["Title"] = "Sipariş Detay";
 }
 <div class="card m-5">
+    <a href="/Admin/Musteri">
+        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2">
+            <i class="fa-solid fa-arrow-left" title="Geri Dön" style="font-size:30px;"></i>
+        </button>
+    </a>
     <div class="card-body">
         <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,7 +126,7 @@
                                 </td>
                                 <td>
                                     <a href="/Admin/Siparis/Detay/@item.Id">
-                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true" title="Detaya Git"></i></button>
                                     </a>
                                   
                                 </td>                      

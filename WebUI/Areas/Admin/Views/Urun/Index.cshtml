@@ -43,6 +43,7 @@
                         <th>Iskonto</th>
                         <th>Iskonto</th>
                         <th>Kutu Adet</th>
+                        <th>Stok Adeti</th>
                         <th>Oluşturulma Tarihi</th>
                         <th></th>
                     </tr>
@@ -71,13 +72,14 @@
                                     <td>@item.Iskonto1</td>
                                     <td>@item.Iskonto2</td>
                                     <td>@item.KutuAdet</td>
+                                    <td>@item.Stok</td>
                                     <td>@Convert.ToDateTime(item.CreateDate).ToShortDateString() </td>
                                     <td>
                                         <a href="/Admin/Urun/Duzenle/@item.Id">
-                                            <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                            <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-pencil" aria-hidden="true" title="Güncelle"></i></button>
                                         </a>
-                                        <a href="#">
-                                            <button class="btn btn-datatable btn-icon btn-transparent-dark delete-link" data-id="@item.Id"><i data-feather="trash-2" ></i></button>
+                                        <a href="#" title="Ürünü Sil">
+                                            <button class="btn btn-datatable btn-icon btn-transparent-dark delete-link" data-id="@item.Id"><i data-feather="trash-2" title="Ürünü Sil"></i></button>
                                         </a>
                                     </td>
                                 </tr>

@@ -48,7 +48,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Siparis>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<Siparis>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<Siparis>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDto>> GetAllByCanceled(int customerId)
@@ -58,7 +58,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDto>> GetAllByCanceled()
@@ -68,7 +68,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDto>> GetAllByCompleted(int customerId)
@@ -78,7 +78,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDto>> GetAllByCompleted()
@@ -88,7 +88,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDto>> GetAllByCustomerId(int customerId)
@@ -98,7 +98,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDto>>(datas,"Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDto>> GetAllByOrderBy()
@@ -108,7 +108,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<Siparis>> GetByIdAsync(int id)

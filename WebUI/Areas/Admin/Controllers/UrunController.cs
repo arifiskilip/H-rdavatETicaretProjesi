@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Areas.Admin.Models;
@@ -72,8 +73,9 @@ namespace WebUI.Areas.Admin.Controllers
                     Iskonto3 = model.Iskonto3,
                     KategoriId = model.KategoriId,
                     Kod = model.Kod,
-                    KutuAdet = model.KutuAdet,
-                    ListeFiyat = model.ListeFiyat,
+                    KutuAdet = Convert.ToInt32(model.KutuAdet),
+                    Stok = Convert.ToInt32(model.Stok),
+                    ListeFiyat = Convert.ToInt32(model.ListeFiyat),
                     MarkaId = model.MarkaId,
                     StokDurum = model.StokDurum
                 };
@@ -103,6 +105,7 @@ namespace WebUI.Areas.Admin.Controllers
                     Id = id,
                     Ad = product.Data.Ad,
                     KutuAdet = product.Data.KutuAdet,
+                    Stok = product.Data.Stok,
                     Iskonto1 = product.Data.Iskonto1,
                     Iskonto2 = product.Data.Iskonto2,
                     Iskonto3 = product.Data.Iskonto3,
@@ -135,6 +138,7 @@ namespace WebUI.Areas.Admin.Controllers
                 urun.Data.KategoriId = model.KategoriId;
                 urun.Data.Kod = model.Kod;
                 urun.Data.KutuAdet = model.KutuAdet;
+                urun.Data.Stok = model.Stok;
                 urun.Data.ListeFiyat = model.ListeFiyat;
                 urun.Data.MarkaId = model.MarkaId;
                 urun.Data.StokDurum = model.StokDurum;

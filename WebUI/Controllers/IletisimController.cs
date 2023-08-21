@@ -7,7 +7,6 @@ namespace WebUI.Controllers
 {
     public class IletisimController : Controller
     {
-        [Authorize(Roles ="Üye")]
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)

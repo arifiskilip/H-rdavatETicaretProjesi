@@ -6,6 +6,7 @@
 }
 <div class="card m-5">
     <div class="card-body">
+        
         <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -123,21 +124,21 @@
                                 </td>
                                 <td>
                                     <a href="/Admin/Siparis/Detay/@item.Id">
-                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true" title="Sipariş Detay"></i></button>
                                     </a>
                                     @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
                                     {
-                                        <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-tag" aria-hidden="true"></i></button>
+                                        <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-tag" aria-hidden="true" title="İndirim Uygula"></i></button>
                                     }
                                 </td>
                                 <td>
                                     @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.İptalEdildi)
                                     {
-                                        <button class="confirmOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                        <button class="confirmOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-check" aria-hidden="true" title="Siparişi Onayla"></i></button>
                                     }
                                     @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
                                     {
-                                    <button class="canceledOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                        <button class="canceledOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-times" aria-hidden="true" title="Siparişi İptal Et"></i></button>
                                     }
                                 </td>
                             </tr>

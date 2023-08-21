@@ -50,7 +50,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<SiparisDetay>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<SiparisDetay>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<SiparisDetay>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public IDataResult<List<OrderDetailDto>> GetAllByOrderId(int orderId)
@@ -60,7 +60,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<OrderDetailDto>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<OrderDetailDto>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<OrderDetailDto>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<SiparisDetay>> GetByIdAsync(int id)

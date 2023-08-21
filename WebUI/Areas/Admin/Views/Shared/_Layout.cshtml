@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="nav-fixed">
+
     <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
         <!-- Navbar Brand-->
         <!-- * * Tip * * You can use text or an image for your navbar brand.-->
@@ -25,23 +26,7 @@
         <!--<button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>-->
         <!-- Navbar Items-->
         <ul class="navbar-nav align-items-center ml-auto">
-
-            <li class="nav-item dropdown no-caret mr-3 d-md-none">
-                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>
-                <!-- Dropdown - Search-->
-                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--fade-in-up" aria-labelledby="searchDropdown">
-                    <form class="form-inline mr-auto w-100">
-                        <div class="input-group input-group-joined input-group-solid">
-                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown no-caret mr-3 mr-lg-0 dropdown-user">
+            <li class="nav-item dropdown no-caret mr-3 mr-lg-0 dropdown-user show">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="~/E-Ticaret/dist/assets/img/illustrations/profiles/profile-1.png"></a>
                 <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
@@ -51,9 +36,94 @@
                             <div class="dropdown-user-details-email">example@mail.com</div>
                         </div>
                     </h6>
-                    <div class="dropdown-divider"></div>
+                    @*a*@
+                    <div id="layoutSidenav_nav">
+                        <nav class="sidenav shadow-right sidenav-light">
+                            <div class="sidenav-menu">
+                                <div class="nav accordion" id="accordionSidenav">
+                                    <a class="nav-link collapsed mt-5" href="/AnaSayfa" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon"><i class="fa-solid fa-home"></i></div>
+                                        Anasayfa
+                                    </a>
+
+                                    <!-- Sidenav Accordion (Dashboard)-->
+                                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon">
+                                            <i class="fa fa-truck"></i>
+                                        </div>
+                                        Siparişler
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link" href="/Admin/Siparis/Index">
+                                                Tüm Siparişler
+                                            </a>
+                                            <a class="nav-link" href="/Admin/Siparis/TamamlananSiparisler">Tamamlanan Siparişler</a>
+                                            <a class="nav-link" href="/Admin/Siparis/IptalEdilenSiparisler">İptal Edilen Siparişler</a>
+                                        </nav>
+                                    </div>
+                                    <!-- Sidenav Accordion (Dashboard)-->
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon"><i class="fa fa-tag "></i></div>
+                                        Ürünler
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseProduct" data-parent="#accordionSidenav" style="">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link " href="/Admin/Urun">
+                                                Tüm Ürünler
+                                            </a>
+                                            <a class="nav-link" href="/Admin/Urun/Ekle">Ürün Ekle</a>
+                                        </nav>
+                                    </div>
+                                    <!-- Sidenav Accordion (Dashboard)-->
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseBrand" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon"><i class="fa fa-building "></i></div>
+                                        Markalar
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseBrand" data-parent="#accordionSidenav" style="">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link  " href="/Admin/Marka">
+                                                Tüm Markalar
+                                            </a>
+                                            <a class="nav-link" href="/Admin/Marka/Ekle">Marka Ekle</a>
+                                        </nav>
+                                    </div>
+                                    <!-- Sidenav Accordion (Dashboard)-->
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon"><i class="fa fa-th-list"></i></div>
+                                        Kategoriler
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseCategory" data-parent="#accordionSidenav" style="">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link " href="/Admin/Kategori">
+                                                Tüm Kategoriler
+                                            </a>
+                                            <a class="nav-link" href="/Admin/Kategori/Ekle">Kategori Ekle</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon"><i class="fa fa-users"></i></div>
+                                        Kullanıcılar
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseUsers" data-parent="#accordionSidenav" style="">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link " href="/Admin/Musteri/Index">
+                                                Müşteriler
+                                            </a>
+
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                    </div>
                     <a class="dropdown-item" asp-area="" asp-action="CıkısYap" asp-controller="Hesap">
-                        >
                         <div class="dropdown-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div>
                         Güvenli Çıkış
                     </a>
@@ -61,6 +131,7 @@
             </li>
         </ul>
     </nav>
+
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sidenav shadow-right sidenav-light">
@@ -139,7 +210,7 @@
                         <!-- Sidenav Accordion (Pages)-->
                         <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseDashboards">
                             <div class="nav-link-icon"><i class="fa fa-users"></i></div>
-                                Kullanıcılar
+                            Kullanıcılar
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
                         </a>
                         <div class="collapse" id="collapseUsers" data-parent="#accordionSidenav" style="">
@@ -147,17 +218,18 @@
                                 <a class="nav-link " href="/Admin/Musteri/Index">
                                     Müşteriler
                                 </a>
-                                
+
                             </nav>
                         </div>
                     </div>
                 </div>
             </nav>
+
         </div>
         <div id="layoutSidenav_content">
             <main>
                 @RenderBody()
-               
+
 
 
 
@@ -190,7 +262,5 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
     <script src="~/E-Ticaret/dist/assets/demo/date-range-picker-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 </body>
 </html>

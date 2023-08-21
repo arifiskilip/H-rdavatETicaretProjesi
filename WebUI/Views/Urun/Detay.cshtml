@@ -132,7 +132,7 @@
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><p class="d-inline">SKU: <span>00012</span></p></li>
-                                            <li class="breadcrumb-item"><span class="d-inline">Kategori: <a href="#">Yapı Malzemeleri</a><span class="comma-separtor"></li>
+                                            <li class="breadcrumb-item"><span class="d-inline">Kategori: <a href="/Urun/Kategori/@Model.UrunDto.Data.KategoriId">@Model.UrunDto.Data.KategoriAdi</a><span class="comma-separtor"></li>
                                         </ol>
                                         <input type="number" id="productId" value="@Model.UrunDto.Data.Id" style="display:none" />
                                     </nav>
@@ -182,7 +182,14 @@
 
                             <div class="product">
                                 <div class="product-img">
-                                    <img src="~/E-Ticaret/files/img/item1.jpg">
+                                    @if (GetImageHelper.GetProductImagesById(item.Id).Count() > 0)
+                                    {
+                                        <img src="@GetImageHelper.GetProductImagesById(item.Id)[0].ResimYol" style="width:250px;height: 250px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/E-Ticaret/files/img/item1.jpg" style="width:250px;height: 250px;">
+                                    }
                                     <div class="overlay-img">
                                         <div class="overlay-content">
                                             <a href="/Member/Urun/Ekle/@item.Id"><i class="las la-shopping-bag"></i></a>
@@ -215,7 +222,14 @@
                         <div class="item text-center">
                             <div class="product">
                                 <div class="product-img">
-                                    <img src="~/E-Ticaret/files/img/item1.jpg">
+                                    @if (GetImageHelper.GetProductImagesById(Model.UrunlerDto.Data[i].Id).Count() > 0)
+                                    {
+                                        <img src="@GetImageHelper.GetProductImagesById(Model.UrunlerDto.Data[i].Id)[0].ResimYol" style="width:250px;height: 250px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/E-Ticaret/files/img/item1.jpg" style="width:250px;height: 250px;">
+                                    }
                                     <div class="overlay-img">
                                         <div class="overlay-content">
                                             <a href="/Member/Urun/Ekle/@Model.UrunlerDto.Data[i].Id"><i class="las la-shopping-bag"></i></a>
@@ -223,7 +237,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="/Urun/Detay/@Model.UrunlerDto.Data[i].Id">
+                                <a href="/Urun/Detay/@Model.UrunlerDto.Data[i].Id" style="width:500px;height:500px;">
                                     <div class="product-detail">
                                         <span class="product-cat">@Model.UrunlerDto.Data[i].KategoriAdi</span>
                                         <h4 class="product-name">@Model.UrunlerDto.Data[i].Ad</h4>

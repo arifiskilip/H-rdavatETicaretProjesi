@@ -3,6 +3,7 @@ using Business.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Contexts;
 using Entities.Concrete;
+using Entities.Dtos;
 using Entities.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -80,10 +81,13 @@ namespace WebUI.Controllers
                 var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
                 TempData["UserId"] = userId;
             }
+            var productDto = _urunService.GetProductDto(id);
+            var datas = _urunService.GetProductListDto().Data.Where(x=> x.KategoriId == productDto.Data.KategoriId).ToList();
+            IDataResult<List<UrunDto>> productListDto = new SuccessDataResult<List<UrunDto>>(datas,"Listeleme işlemi başarılı");
             ProducutListPageModel model = new()
             {
-                UrunDto = _urunService.GetProductDto(id),
-                UrunlerDto = _urunService.GetProductListDto()
+                UrunDto = productDto,
+                UrunlerDto = productListDto
             };
 
             return View(model);

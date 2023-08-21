@@ -4,6 +4,7 @@ using DataAccess.Abstract;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -45,7 +46,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Kategori>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<Kategori>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<Kategori>>(datas.OrderBy(x=> x.Ad).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<Kategori>> GetByIdAsync(int id)

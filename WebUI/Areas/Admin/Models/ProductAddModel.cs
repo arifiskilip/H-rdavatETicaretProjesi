@@ -20,7 +20,12 @@ namespace WebUI.Areas.Admin.Models
         public int? Iskonto1 { get; set; }
         public int? Iskonto2 { get; set; }
         public int? Iskonto3 { get; set; }
+        [Required(ErrorMessage = "Kutu Adet alanı boş geçielemez.")]
+        [Range(1,1000,ErrorMessage = "Kutu adet alanı 1'den küçük olamaz.")]
         public int? KutuAdet { get; set; }
+        [Required(ErrorMessage = "Stok alanı boş geçielemez.")]
+        [Range(1,1000,ErrorMessage ="Stok alanı 1'den küçük olamaz.")]
+        public int? Stok { get; set; }
 
         public SelectList Kategoriler { get; set; }
         public SelectList Markalar { get; set; }

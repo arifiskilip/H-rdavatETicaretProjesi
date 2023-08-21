@@ -62,6 +62,26 @@
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="Member" asp-action="Index" asp-controller="Siparis">
+                        <div class="dropdown-item-icon"></div>
+                        Tüm Siparişler
+                    </a>
+                    <a class="dropdown-item" asp-area="Member" asp-action="Tamamlanmis" asp-controller="Siparis">
+                        <div class="dropdown-item-icon"></div>
+                        Tamamlanan Siparişler
+                    </a>
+                    <a class="dropdown-item" asp-area="Member" asp-action="IptalEdilmis" asp-controller="Siparis">
+                        <div class="dropdown-item-icon"></div>
+                        İptal Edilen Siparişler
+                    </a>
+                    <a class="dropdown-item" asp-area="Member" asp-action="Index" asp-controller="Profil">
+                        <div class="dropdown-item-icon"></div>
+                        Hesay Detayları
+                    </a>
+                    <a class="dropdown-item" asp-area="Member" asp-action="Guvenlik" asp-controller="Profil">
+                        <div class="dropdown-item-icon"></div>
+                        Güvenlik
+                    </a>
                     <a class="dropdown-item" asp-area="" asp-action="CıkısYap" asp-controller="Hesap">
                         <div class="dropdown-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div>
                         Güvenli Çıkış

@@ -46,7 +46,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Musteri>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<Musteri>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<Musteri>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<Musteri>> GetByIdAsync(int id)

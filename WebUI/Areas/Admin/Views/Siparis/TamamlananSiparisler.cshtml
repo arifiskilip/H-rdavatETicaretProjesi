@@ -5,6 +5,11 @@
     TempData["Title"] = "Tamamlanan Siparişler";
 }
 <div class="card m-5">
+    <a href="/Admin/Siparis">
+        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2">
+            <i class="fa-solid fa-arrow-left" title="Geri Dön" style="font-size:30px;"></i>
+        </button>
+    </a>
     <div class="card-body">
         <div class="datatable">
             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
@@ -55,7 +60,7 @@
                                 </td>
                                 <td>
                                     <a href="/Admin/Siparis/Detay/@item.Id">
-                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true" title="Sipariş Detay"></i></button>
                                     </a>
 
                                 </td>

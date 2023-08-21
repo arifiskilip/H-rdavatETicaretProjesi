@@ -32,7 +32,7 @@ namespace WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-				if (_kategoriService.GetAllAsync().Result.Data.Any(x => x.Ad == model.Ad))
+				if (_kategoriService.GetAllAsync().Result.Data.Any(x => x.Ad.ToLower() == model.Ad.ToLower()))
 				{
 					ModelState.AddModelError("", $"{model.Ad} zaten kullanılıyor.");
 					return View(model);

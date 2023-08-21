@@ -71,22 +71,22 @@ namespace WebUI.Areas.Admin.Controllers
                         {
                             return Json(new { success = false, message = "Teslim adeti 1 den küçük olamaz." });
                         }
-                        if (stockControl.Data.KutuAdet >= yeniTeslimAdet && orderDetail.Data.TeslimAdet == null)
+                        if (stockControl.Data.Stok >= yeniTeslimAdet && orderDetail.Data.TeslimAdet == null)
                         {
-                            stockControl.Data.KutuAdet -= yeniTeslimAdet;
+                            stockControl.Data.Stok -= yeniTeslimAdet;
                         }
-                        else if (stockControl.Data.KutuAdet >= yeniTeslimAdet && orderDetail.Data.TeslimAdet != null)
+                        else if (stockControl.Data.Stok >= yeniTeslimAdet && orderDetail.Data.TeslimAdet != null)
                         {
                             if (orderDetail.Data.TeslimAdet > yeniTeslimAdet)
                             {
                                 int adet = (int)orderDetail.Data.TeslimAdet - yeniTeslimAdet;
-                                stockControl.Data.KutuAdet += adet;
+                                stockControl.Data.Stok += adet;
 
                             }
                             else if (orderDetail.Data.TeslimAdet < yeniTeslimAdet)
                             {
                                 int adet = yeniTeslimAdet - (int)orderDetail.Data.TeslimAdet;
-                                stockControl.Data.KutuAdet -= adet;
+                                stockControl.Data.Stok -= adet;
 
                             }
                             else
@@ -96,7 +96,7 @@ namespace WebUI.Areas.Admin.Controllers
                         }
                         else
                         {
-                            return Json(new { success = false, message = $"İlgili üründen yanlızca {stockControl.Data.KutuAdet} adet kaldı. Lütfen stok adeti kadar miktar giriniz." });
+                            return Json(new { success = false, message = $"İlgili üründen yanlızca {stockControl.Data.Stok} adet kaldı. Lütfen stok adeti kadar miktar giriniz." });
                         }
 
                         await _urunService.UpdateAsync(stockControl.Data);

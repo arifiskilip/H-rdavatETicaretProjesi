@@ -21,6 +21,7 @@ namespace Entities.Dtos
         public int? Iskonto2 { get; set; }
         public int? Iskonto3 { get; set; }
         public int? KutuAdet { get; set; }
+        public int? Stok { get; set; }
         public DateTime? CreateDate { get; set; }
     }
 }

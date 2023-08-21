@@ -5,6 +5,7 @@ using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Dtos;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -46,7 +47,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Urun>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<Urun>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<Urun>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<Urun>> GetByIdAsync(int id)
@@ -74,7 +75,7 @@ namespace Business.Concrete
             var checkEntity = _urunDal.GetProductListDto();
             if (checkEntity != null)
             {
-                return new SuccessDataResult<List<UrunDto>>(checkEntity, "İşlem başarılı!");
+                return new SuccessDataResult<List<UrunDto>>(checkEntity.OrderByDescending(x => x.Id).ToList(), "İşlem başarılı!");
             }
             return new ErrorDataResult<List<UrunDto>>("İşlem başarısız!");
         }
@@ -86,7 +87,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Urun>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<Urun>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<Urun>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IDataResult<List<Urun>>> ProductsWithCategoryIdGet(int categoryId)
@@ -96,7 +97,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Urun>>("Listeleme işlemi başarısız!");
             }
-            return new SuccessDataResult<List<Urun>>(datas, "Listeleme işlemi başarılı!");
+            return new SuccessDataResult<List<Urun>>(datas.OrderByDescending(x => x.Id).ToList(), "Listeleme işlemi başarılı!");
         }
 
         public async Task<IResult> UpdateAsync(Urun entity)

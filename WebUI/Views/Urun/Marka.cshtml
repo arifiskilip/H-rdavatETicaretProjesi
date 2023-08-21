@@ -1,4 +1,5 @@
-﻿@using DataAccess.Helpers;
+﻿@using Business.Utilities.Helpers;
+@using DataAccess.Helpers;
 @model ProducutListPageModel
 
 @{
@@ -38,14 +39,14 @@
                     </div>
                     <div class="product-price mt-5">
                         <h5 class="filter-heading">Marka</h5>
-                        <input class="form-control mr-sm-2" style="border-radius:15px;" type="search" placeholder="Marka Adı" aria-label="Ara">
+                        <input class="form-control mr-sm-2" style="border-radius:15px;" id="aramaInput" type="search" placeholder="Marka Adı" aria-label="Ara">
                         <div class="product-category">
-                            <ul>
+                            <ul id="veriListesi">
                                 @if (Model.BrandResult.Succes)
                                 {
                                     @foreach (var item in Model.BrandResult.Data)
                                     {
-                                        <li><a href="/Urun/Marka/@item.Id">@item.Ad</a><span>(@Model.ProductResult.Data.Where(x=> x.MarkaId == item.Id).Count())</span></li>
+                                        <li><a href="/Urun/Marka/@item.Id">@item.Ad </a><span>(@Model.ProductResult.Data.Where(x=> x.MarkaId == item.Id).Count())</span></li>
                                     }
                                 }
                                 else if (Model.BrandResult.Data.Count() == 0)
@@ -76,12 +77,18 @@
                                         <div class="col-4 col-md-6 col-lg-4 col-sm-3 text-center wow slideInUp" style="visibility: visible; animation-name: slideInUp;">
                                             <div class="featured-item-card">
                                                 <div class="item-img">
-                                                    <img src="~/E-Ticaret/images/urun1.jpg">
+                                                    @if (GetImageHelper.GetProductImagesById(item.Id).Count() > 0)
+                                                    {
+                                                        <img src="@GetImageHelper.GetProductImagesById(item.Id)[0].ResimYol" style="width:250px;height: 250px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/E-Ticaret/files/img/item1.jpg" style="width:250px;height: 250px;">
+                                                    }
                                                     <div class="item-overlay">
                                                         <div class="item-btns">
                                                             <a href="/Member/Urun/Ekle/@item.Id" class="btn btn-view"><i class="las la-shopping-bag"></i></a>
 
-                                                            <a href="files/product-detail.html" class="btn btn-view"><i class="las la-plus"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -160,3 +167,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    const aramaInput = document.getElementById("aramaInput");
+    const veriListesi = document.getElementById("veriListesi").getElementsByTagName("li");
+
+    aramaInput.addEventListener("input", function () {
+        const arananKelime = aramaInput.value.toLowerCase();
+
+        for (let i = 0; i < veriListesi.length; i++) {
+            const veri = veriListesi[i].textContent.toLowerCase();
+
+            if (veri.includes(arananKelime)) {
+                veriListesi[i].style.display = "block";
+            } else {
+                veriListesi[i].style.display = "none";
+            }
+        }
+    });
+</script>

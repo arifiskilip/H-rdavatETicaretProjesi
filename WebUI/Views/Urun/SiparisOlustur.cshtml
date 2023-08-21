@@ -1,8 +1,12 @@
-﻿@using DataAccess.Concrete;
+﻿@using Business.Utilities.Helpers;
+@using DataAccess.Concrete;
 @using Entities.Concrete;
 @model List<Sepet>
 @{
     SepetDal sepetDal = new SepetDal();
+
+    TempData["Title"] = "Sipariş Oluştur";
+
 }
 @*Modal*@
 
@@ -27,7 +31,7 @@
 </div>
 <div class="about_content padding-top padding-bottom" style="margin-top: 20px;">
 
-       
+
     <!-- START SHOP CART SECTION -->
     <div class="shop-cart wow slideInUp" data-wow-duration="2s" style="visibility: visible; animation-duration: 2s; animation-name: slideInUp;">
         <div class="container">
@@ -68,12 +72,21 @@
                                                         <div class="row no-gutters">
 
                                                             <div class="col-12 col-lg-2 product-detail-cart-image">
-                                                                <a class="shopping-product" href="javascript:void(0)"><img src="img/item1.jpg" alt="Generic placeholder image"></a>
+                                                                @if (!string.IsNullOrEmpty(GetImageHelper.GetProductImagesById(item.UrunId)[0].ResimYol))
+                                                                {
+                                                                    <a class="shopping-product" href="javascript:void(0)"><img src="@GetImageHelper.GetProductImagesById(item.UrunId)[0].ResimYol" alt="Generic placeholder image"></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="shopping-product" href="javascript:void(0)"><img src="~/E-Ticaret/images/item1.jpg" alt="Generic placeholder image"></a>
+                                                                   
+                                                                }
+                                                               
                                                             </div>
 
-                                                            <div class="col-12 col-lg-10 mt-auto mb-auto product-detail-cart-data">
-                                                                <div class="media-body ml-lg-3">
-                                                                    <h4 class="product-name"><a href="product-detail.html">@item.Urun.Ad</a></h4>
+                                                            <div class="col-12 col-lg-10 mt-auto mb-auto product-detail-cart-data" >
+                                                                <div class="media-body ml-lg-3" style="margin-left: 60px!important">
+                                                                    <h4 class="product-name"><a href="/Urun/Detay/@item.UrunId">@item.Urun.Ad</a></h4>
                                                                     <p class="product-des">@item.Urun.Kod</p>
                                                                 </div>
                                                             </div>
@@ -128,7 +141,8 @@
                     }
                     else
                     {
-                        <div class="alert alert-info">Lütfen sepete ürün ekleyin.</div>
+                        <div class="alert alert-warning">Lütfen sepete ürün ekleyin.</div>
+                        <div class="alert alert-info">Alışverişe devam etmek için <a href="/Urun"><b>TIKLAYIN</b></a></div>
                     }
                 </div>
             </div>
@@ -217,7 +231,7 @@
                                 window.location.href = "/AnaSayfa/Index";
                             }
                         });
-                        
+
                     }
                     else {
                         Swal.fire({

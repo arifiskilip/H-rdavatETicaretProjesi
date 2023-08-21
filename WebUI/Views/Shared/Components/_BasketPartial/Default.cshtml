@@ -1,4 +1,5 @@
 ﻿@using Business.Concrete;
+@using Business.Utilities.Helpers;
 @using DataAccess.Concrete;
 @using Entities.Concrete
 @model ProducutListPageModel
@@ -20,7 +21,15 @@
                     {
                         <div class="bag-item">
                             <div class="item-img">
-                                <img src="~/E-Ticaret/files/img/item1.jpg">
+                                @if (!string.IsNullOrEmpty(GetImageHelper.GetProductImagesById(item.UrunId)[0].ResimYol))
+                                {
+                                    <img src="@GetImageHelper.GetProductImagesById(item.UrunId)[0].ResimYol">
+                                }
+                                else
+                                {
+                                    <img src="~/E-Ticaret/files/img/item1.jpg">
+                                }
+
                             </div>
                             <div class="item-details">
                                 <h4 class="item-name">@item.Urun.Ad</h4>
