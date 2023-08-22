@@ -35,22 +35,6 @@
         <!--<button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>-->
         <!-- Navbar Items-->
         <ul class="navbar-nav align-items-center ml-auto">
-
-            <li class="nav-item dropdown no-caret mr-3 d-md-none">
-                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>
-                <!-- Dropdown - Search-->
-                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--fade-in-up" aria-labelledby="searchDropdown">
-                    <form class="form-inline mr-auto w-100">
-                        <div class="input-group input-group-joined input-group-solid">
-                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
-
             <li class="nav-item dropdown no-caret mr-3 mr-lg-0 dropdown-user">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="@getUser.Resim"></a>
                 <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
@@ -61,27 +45,47 @@
                             <div class="dropdown-user-details-email">@getUser.Email</div>
                         </div>
                     </h6>
+                    <div id="layoutSidenav_nav">
+                        <nav class="sidenav shadow-right sidenav-light">
+                            <div class="sidenav-menu">
+                                <div class="nav accordion" id="accordionSidenav">
+                                    <a class="nav-link collapsed mt-2" href="/AnaSayfa" aria-expanded="false" aria-controls="collapseDashboards">
+                                        <div class="nav-link-icon"><i class="fa-solid fa-home"></i></div>
+                                        Anasayfa
+                                    </a>
+                                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards" id="kullanici">
+                                        <div class="nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                                        Profil Bilgileri
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link" href="/Member/Profil/Index">
+                                                Hesap Detayları
+                                            </a>
+                                            <a class="nav-link" href="/Member/Profil/Guvenlik">Güvenlik</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false" aria-controls="collapseDashboards" id="siparisler">
+                                        <div class="nav-link-icon"><i class="fa-solid fa-list "></i></div>
+                                        Siparişlerim
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
+                                    </a>
+                                    <div class="collapse" id="collapseProduct" data-parent="#accordionSidenav" style="">
+                                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                            <a class="nav-link " href="/Member/Siparis">
+                                                Tüm Siparişlerim
+                                            </a>
+                                            <a class="nav-link" href="/Member/Siparis/Tamamlanmis">Tamamlanan Siparişler</a>
+                                            <a class="nav-link" href="/Member/Siparis/IptalEdilmis">İptal Edilen Siparişler</a>
+                                        </nav>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-area="Member" asp-action="Index" asp-controller="Siparis">
-                        <div class="dropdown-item-icon"></div>
-                        Tüm Siparişler
-                    </a>
-                    <a class="dropdown-item" asp-area="Member" asp-action="Tamamlanmis" asp-controller="Siparis">
-                        <div class="dropdown-item-icon"></div>
-                        Tamamlanan Siparişler
-                    </a>
-                    <a class="dropdown-item" asp-area="Member" asp-action="IptalEdilmis" asp-controller="Siparis">
-                        <div class="dropdown-item-icon"></div>
-                        İptal Edilen Siparişler
-                    </a>
-                    <a class="dropdown-item" asp-area="Member" asp-action="Index" asp-controller="Profil">
-                        <div class="dropdown-item-icon"></div>
-                        Hesay Detayları
-                    </a>
-                    <a class="dropdown-item" asp-area="Member" asp-action="Guvenlik" asp-controller="Profil">
-                        <div class="dropdown-item-icon"></div>
-                        Güvenlik
-                    </a>
                     <a class="dropdown-item" asp-area="" asp-action="CıkısYap" asp-controller="Hesap">
                         <div class="dropdown-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div>
                         Güvenli Çıkış
@@ -171,7 +175,44 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
     <script src="~/E-Ticaret/dist/assets/demo/date-range-picker-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdownMenu = document.querySelector(".dropdown-menu");
+            const subMenuItems = dropdownMenu.querySelectorAll(".nav-link.collapsed");
 
+            dropdownMenu.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
 
+            subMenuItems.forEach(function (item) {
+                item.addEventListener("click", function (event) {
+                    event.stopPropagation();
+                });
+            });
+
+            document.addEventListener("click", function () {
+                dropdownMenu.classList.remove("show");
+            });
+        });
+
+        $("#siparisler").click(function () {
+            var siparisElement = $("#collapseProduct");
+            if (siparisElement.hasClass("show")) {
+                siparisElement.removeClass("show");
+            } else {
+                siparisElement.addClass("show");
+            }
+        });
+        $("#kullanici").click(function () {
+            var element = $("#collapseDashboards");
+            if (element.hasClass("show")) {
+                element.removeClass("show");
+            } else {
+                element.addClass("show");
+            }
+        });
+
+    </script>
 </body>
 </html>

@@ -17,14 +17,7 @@
 <body class="nav-fixed">
 
     <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
-        <!-- Navbar Brand-->
-        <!-- * * Tip * * You can use text or an image for your navbar brand.-->
-        <!-- * * * * * * When using an image, we recommend the SVG format.-->
-        <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
         <a class="navbar-brand" href="home.html"> <img class="w-50 h-50" src="~/E-Ticaret/images/bigalogo.png"> <small> I Admin </small></a>
-        <!-- Sidenav Toggle Button-->
-        <!--<button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle"><i data-feather="menu"></i></button>-->
-        <!-- Navbar Items-->
         <ul class="navbar-nav align-items-center ml-auto">
             <li class="nav-item dropdown no-caret mr-3 mr-lg-0 dropdown-user show">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="~/E-Ticaret/dist/assets/img/illustrations/profiles/profile-1.png"></a>
@@ -41,20 +34,20 @@
                         <nav class="sidenav shadow-right sidenav-light">
                             <div class="sidenav-menu">
                                 <div class="nav accordion" id="accordionSidenav">
-                                    <a class="nav-link collapsed mt-5" href="/AnaSayfa" aria-expanded="false" aria-controls="collapseDashboards">
+                                    <a class="nav-link collapsed mt-2" href="/AnaSayfa" aria-expanded="false" aria-controls="collapseDashboards">
                                         <div class="nav-link-icon"><i class="fa-solid fa-home"></i></div>
                                         Anasayfa
                                     </a>
 
                                     <!-- Sidenav Accordion (Dashboard)-->
-                                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" id="siparisler" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
                                         <div class="nav-link-icon">
                                             <i class="fa fa-truck"></i>
                                         </div>
                                         Siparişler
                                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </a>
-                                    <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
+                                    <div class="collapse" id="siparis" data-parent="#accordionSidenav">
                                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                             <a class="nav-link" href="/Admin/Siparis/Index">
                                                 Tüm Siparişler
@@ -64,8 +57,8 @@
                                         </nav>
                                     </div>
                                     <!-- Sidenav Accordion (Dashboard)-->
-                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false" aria-controls="collapseDashboards">
-                                        <div class="nav-link-icon"><i class="fa fa-tag "></i></div>
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false" aria-controls="collapseDashboards" id="urunler">
+                                        <div  class="nav-link-icon"><i class="fa fa-tag "></i></div>
                                         Ürünler
                                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
                                     </a>
@@ -78,7 +71,7 @@
                                         </nav>
                                     </div>
                                     <!-- Sidenav Accordion (Dashboard)-->
-                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseBrand" aria-expanded="false" aria-controls="collapseDashboards">
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseBrand" aria-expanded="false" aria-controls="collapseDashboards" id="markalar">
                                         <div class="nav-link-icon"><i class="fa fa-building "></i></div>
                                         Markalar
                                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
@@ -92,7 +85,7 @@
                                         </nav>
                                     </div>
                                     <!-- Sidenav Accordion (Dashboard)-->
-                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseDashboards">
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseDashboards" id="kategori">
                                         <div class="nav-link-icon"><i class="fa fa-th-list"></i></div>
                                         Kategoriler
                                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
@@ -105,7 +98,7 @@
                                             <a class="nav-link" href="/Admin/Kategori/Ekle">Kategori Ekle</a>
                                         </nav>
                                     </div>
-                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseDashboards">
+                                    <a class="nav-link  collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseDashboards" id="kullanici">
                                         <div class="nav-link-icon"><i class="fa fa-users"></i></div>
                                         Kullanıcılar
                                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down "></i></div>
@@ -150,7 +143,7 @@
                             Siparişler
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
+                        <div class="collapse" id="siparis" data-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                                 <a class="nav-link" href="/Admin/Siparis/Index">
                                     Tüm Siparişler
@@ -262,5 +255,69 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
     <script src="~/E-Ticaret/dist/assets/demo/date-range-picker-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdownMenu = document.querySelector(".dropdown-menu");
+            const subMenuItems = dropdownMenu.querySelectorAll(".nav-link.collapsed");
+
+            dropdownMenu.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
+
+            subMenuItems.forEach(function (item) {
+                item.addEventListener("click", function (event) {
+                    event.stopPropagation(); 
+                });
+            });
+
+            document.addEventListener("click", function () {
+                dropdownMenu.classList.remove("show"); 
+            });
+        });
+
+        $("#siparisler").click(function () {
+            var siparisElement = $("#siparis");
+            if (siparisElement.hasClass("show")) {
+                siparisElement.removeClass("show");
+            } else {
+                siparisElement.addClass("show");
+            }
+        });
+        $("#urunler").click(function () {
+            var element = $("#collapseProduct");
+            if (element.hasClass("show")) {
+                element.removeClass("show");
+            } else {
+                element.addClass("show");
+            }
+        });
+        $("#markalar").click(function () {
+            var element = $("#collapseBrand");
+            if (element.hasClass("show")) {
+                element.removeClass("show");
+            } else {
+                element.addClass("show");
+            }
+        });
+        $("#kategori").click(function () {
+            var element = $("#collapseCategory");
+            if (element.hasClass("show")) {
+                element.removeClass("show");
+            } else {
+                element.addClass("show");
+            }
+        });
+        $("#kullanici").click(function () {
+            var element = $("#collapseUsers");
+            if (element.hasClass("show")) {
+                element.removeClass("show");
+            } else {
+                element.addClass("show");
+            }
+        });
+
+        
+       
+    </script>
 </body>
 </html>
