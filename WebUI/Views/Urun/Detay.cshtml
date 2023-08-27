@@ -84,7 +84,16 @@
 
                             <div class="col-12 col-lg-6 text-center text-lg-left">
                                 <div class="product-single-price">
-                                    <h4><span class="real-price">@Model.UrunDto.Data.ListeFiyat ₺</span> <span><del>@Model.UrunDto.Data.ListeFiyat ₺</del></span></h4>
+                                    <h4><span class="real-price">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                @CalculateHalpers.KdvAmount(Model.UrunDto.Data.Id,1)
+                                            }
+                                            else
+                                            {
+                                                <text>**</text>
+                                            } ₺
+                                        </span> 
                                     <p class="pro-description">@Model.UrunDto.Data.Ad</p>
                                 </div>
 
@@ -93,6 +102,7 @@
 
                                         <li><i class="fas fa-check"></i>Marka : @Model.UrunDto.Data.MaraAdi</li>
                                         <li><i class="fas fa-check"></i>Ürün Kodu: @Model.UrunDto.Data.Kod</li>
+                                        <li><i class="fas fa-check"></i>Kutu Adet: @Model.UrunDto.Data.KutuAdet</li>
                                         <li><i class="fas fa-check"></i>İskonto: %@CalculateHalpers.CalculateIskonto(Model.UrunDto.Data.Id)</li>
                                         <li>
                                             <i class="fas fa-check"></i>Stok Durumu: @if (Model.UrunDto.Data.StokDurum == true)

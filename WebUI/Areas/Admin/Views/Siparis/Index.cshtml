@@ -109,34 +109,34 @@
                                 <td>@item.Indirim</td>
                                 <td>@item.FaturaTutari ₺</td>
                                 <td>
-                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda)
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Hazırlanıyor)
                                     {
-                                        <text><div class="badge badge-warning badge-pill">Yolda</div></text>
+                                        <text><div class="badge badge-warning badge-pill">Hazırlanıyor</div></text>
                                     }
                                     else if (item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
                                     {
-                                        <text><div class="badge badge-primary badge-pill">Tamamlandı</div></text>
+                                        <text><div class="badge badge-primary badge-pill">Sipariş Onaylandı</div></text>
                                     }
                                     else
                                     {
-                                        <text><div class="badge badge-danger badge-pill">İptal</div></text>
+                                        <text><div class="badge badge-danger badge-pill">Sipariş İptal Edildi</div></text>
                                     }
                                 </td>
                                 <td>
                                     <a href="/Admin/Siparis/Detay/@item.Id">
                                         <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true" title="Sipariş Detay"></i></button>
                                     </a>
-                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Hazırlanıyor || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
                                     {
                                         <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-tag" aria-hidden="true" title="İndirim Uygula"></i></button>
                                     }
                                 </td>
                                 <td>
-                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.İptalEdildi)
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Hazırlanıyor || item.DurumId == (int)SiparisDurumEnum.İptalEdildi)
                                     {
                                         <button class="confirmOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-check" aria-hidden="true" title="Siparişi Onayla"></i></button>
                                     }
-                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Hazırlanıyor || item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
                                     {
                                         <button class="canceledOrder btn btn-datatable btn-icon btn-transparent-dark mr-2" data-siparis-id="@item.Id"><i class="fa fa-times" aria-hidden="true" title="Siparişi İptal Et"></i></button>
                                     }

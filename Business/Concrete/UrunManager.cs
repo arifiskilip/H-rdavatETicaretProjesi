@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete;
+using DataAccess.Contexts;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -20,7 +22,21 @@ namespace Business.Concrete
             _uoW = uoW;
             _urunDal = urunDal;
         }
-
+        public async Task<IResult> MakeStatusPassive(int id)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var checkEntity = await _urunDal.GetByIdAsync(id);
+                if (checkEntity != null)
+                {
+                    checkEntity.Durum = false;
+                    await Task.Run(() => { _urunDal.Update(checkEntity); });
+                    await _uoW.CommitAsync();
+                    return new SuccessResult("İşlem başarılı!");
+                }
+                return new ErrorResult("İşlem başarısız!");
+            }
+        }
         public async Task<IResult> AddAsync(Urun entity)
         {
             await _urunDal.AddAsync(entity);
@@ -42,7 +58,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Urun>>> GetAllAsync()
         {
-            var datas = await _urunDal.GetAllAsync(null,false);
+            var datas = await _urunDal.GetAllAsync(x=> x.Durum ==  true,false);
             if (datas.Count < -1)
             {
                 return new ErrorDataResult<List<Urun>>("Listeleme işlemi başarısız!");
@@ -82,7 +98,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Urun>>> ProductsWithBrandIdGet(int brandId)
         {
-            var datas = await _urunDal.GetAllAsync(x => x.MarkaId == brandId, false);
+            var datas = await _urunDal.GetAllAsync(x => x.MarkaId == brandId && x.Durum == true, false);
             if (datas.Count < -1)
             {
                 return new ErrorDataResult<List<Urun>>("Listeleme işlemi başarısız!");
@@ -92,7 +108,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Urun>>> ProductsWithCategoryIdGet(int categoryId)
         {
-            var datas = await _urunDal.GetAllAsync(x => x.KategoriId == categoryId, false);
+            var datas = await _urunDal.GetAllAsync(x => x.KategoriId == categoryId && x.Durum == true, false);
             if (datas.Count < -1)
             {
                 return new ErrorDataResult<List<Urun>>("Listeleme işlemi başarısız!");

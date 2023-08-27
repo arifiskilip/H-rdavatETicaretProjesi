@@ -72,7 +72,15 @@
                                         <div style="text-align: end;">
                                             <p class="item-price" style="font-size: 25px;">
                                                 <span class="acikrenk"
-                                              style="font-size: 14px;">Ürün Fiyatı</span> <br> @CalculateHalpers.KdvAmount(item.Id,1) ₺
+                                              style="font-size: 14px;">Ürün Fiyatı</span> <br> @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    @CalculateHalpers.KdvAmount(item.Id,1)
+                                                }
+                                                else
+                                                {
+                                                    <text>**.**</text>
+                                                }
+                                                ₺
                                             </p>
                                         </div>
                                     </div>
@@ -81,7 +89,7 @@
                                 <div class="row justify-content-center mt-3">
                                     <a href="/Urun/Detay/@item.Id">
                                         <button class="btn btn-primary"
-                                        style="background-color: #189c97; border-color: #189c97;">
+                                        style="background-color: #276bb5; border-color: #276bb5;">
                                             Ürünü
                                             İncele
                                         </button>

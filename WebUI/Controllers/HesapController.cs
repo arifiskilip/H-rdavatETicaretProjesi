@@ -43,7 +43,7 @@ namespace WebUI.Controllers
         {
             var claims = new List<Claim>();
             if (ModelState.IsValid)
-            {
+            {         
                 Musteri musteri = new()
                 {
                     Telefon = model.Telefon,
@@ -98,6 +98,8 @@ namespace WebUI.Controllers
                     Soyad = model.LastName,
                     Telefon = model.Phone,
                     Sifre = model.Password,
+                    Durum = false,
+                    IndirimOrani=0,
                     Resim = "/Images/avatar.png"
                 };
                 var emailExist = _authService.UserExists(model.Phone);

@@ -51,6 +51,8 @@
                         <th>İskonto</th>
                         <th>KDV</th>
                         <th>Toplam</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,8 +72,9 @@
                                 <td>%@item.ToplamIskonto</td>
                                 <td>%@item.ToplamKdv</td>
                                 <td>@item.ToplamTutar ₺</td>
-                                @if (item.DurumId == (int)SiparisDurumEnum.Yolda)
+                                @if (item.DurumId == (int)SiparisDurumEnum.Hazırlanıyor)
                                 {
+                                    <td><button class="confirmButon btn btn-outline-success" data-urun-id="@item.Id" data-teslim-adet="@item.TalepAdet">Teslim Adetini Tamamla</button></td>
                                     <td><button class="guncelleButon btn btn-outline-primary" data-urun-id="@item.Id">Yeni Teslim Adeti</button></td>
                                 }
 
@@ -143,6 +146,49 @@
 
             $(".close").click(function () {
                 $("#confirmationModal").modal("hide"); // Modalı kapat
+            });
+        });
+        $(".confirmButon").click(function(){
+            var urunId = $(this).data("urun-id");
+            var yeniTeslimAdet = $(this).data("teslim-adet");
+            $.ajax({
+                url: "/Admin/Siparis/EditNewDeliveryAmount", // Urun güncelleme Action metodunun URL'si
+                type: "POST",
+                data: {
+                    siparisDetayId: urunId,
+                    yeniTeslimAdet: yeniTeslimAdet
+                },
+                success: function (data) {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Başarılı!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'Tamam'
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload(); // Sayfayı yeniden yükle
+                            }
+                        });
+
+                    } else {
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        title: 'HATA!',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'Tamam'
+                    });
+                }
             });
         });
     });

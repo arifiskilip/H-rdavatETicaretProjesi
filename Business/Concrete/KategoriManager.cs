@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Contexts;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Kategori>>> GetAllAsync()
         {
-            var datas = await _kategoriDal.GetAllAsync();
+            var datas = await _kategoriDal.GetAllAsync(x => x.Durum == true);
             if (datas.Count < -1)
             {
                 return new ErrorDataResult<List<Kategori>>("Listeleme işlemi başarısız!");
@@ -57,6 +58,22 @@ namespace Business.Concrete
                 return new SuccessDataResult<Kategori>(checkEntity, "İşlem başarılı!");
             }
             return new ErrorDataResult<Kategori>($"{id}'li veri mevcut değKategori!");
+        }
+
+        public async Task<IResult> MakeStatusPassive(int id)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var checkEntity = await _kategoriDal.GetByIdAsync(id);
+                if (checkEntity != null)
+                {
+                    checkEntity.Durum = false;
+                    await Task.Run(() => { _kategoriDal.Update(checkEntity); });
+                    await _uoW.CommitAsync();
+                    return new SuccessResult("İşlem başarılı!");
+                }
+                return new ErrorResult("İşlem başarısız!");
+            }
         }
 
         public async Task<IResult> UpdateAsync(Kategori entity)

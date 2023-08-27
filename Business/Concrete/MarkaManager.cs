@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete;
+using DataAccess.Contexts;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using System.Collections.Generic;
@@ -26,7 +28,21 @@ namespace Business.Concrete
             await _uoW.CommitAsync();
             return new SuccessResult("Ekleme işlemi başarılı!");
         }
-
+        public async Task<IResult> MakeStatusPassive(int id)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var checkEntity = await _markaDal.GetByIdAsync(id);
+                if (checkEntity != null)
+                {
+                    checkEntity.Durum = false;
+                    await Task.Run(() => { _markaDal.Update(checkEntity); });
+                    await _uoW.CommitAsync();
+                    return new SuccessResult("İşlem başarılı!");
+                }
+                return new ErrorResult("İşlem başarısız!");
+            }
+        }
         public async Task<IResult> DeleteAsync(int id)
         {
             var checkEntity = await _markaDal.GetByIdAsync(id);
@@ -41,7 +57,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Marka>>> GetAllAsync()
         {
-            var datas = await _markaDal.GetAllAsync();
+            var datas = await _markaDal.GetAllAsync(x=> x.Durum == true);
             if (datas.Count < -1)
             {
                 return new ErrorDataResult<List<Marka>>("Listeleme işlemi başarısız!");

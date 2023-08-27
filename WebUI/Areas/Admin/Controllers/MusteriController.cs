@@ -2,12 +2,14 @@
 using Business.Utilities.Helpers;
 using Business.Utilities.Results;
 using DataAccess.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MusteriController : Controller
     {
         private readonly IMusteriDal _musteriDal;
@@ -37,14 +39,44 @@ namespace WebUI.Areas.Admin.Controllers
 
 
         //Ajax
+        //İndirim ekle
+        public async Task<IActionResult> DiscountAdd(int userId,int discount)
+        {
+            var checkUser = await _musteriService.GetByIdAsync(userId);
+            if (checkUser.Succes)
+            {
+                checkUser.Data.IndirimOrani = discount;
+                var result = await _musteriService.UpdateAsync(checkUser.Data);
+                if (result.Succes)
+                {
+                    return Json(new { success = result.Succes, message = result.Message });
+                }
+                return Json(new { success = result.Succes, message = result.Message });
+            }
+            return Json(new { success = checkUser.Succes, message = checkUser.Message });
+        }
         //Müşteri Sil
         public async Task<IActionResult> DeleteUser (int userId)
         {
             var checkUser = await _musteriService.GetByIdAsync(userId);
             if (checkUser.Succes)
             {
-                FileHelper.Delete(checkUser.Data.Resim);
-                var result = await _musteriService.DeleteAsync(userId);
+                var result = await _musteriService.MakeStatusPassive(userId);
+                if (result.Succes)
+                {
+                    return Json(new { success = result.Succes, message = result.Message });
+                }
+                return Json(new { success = result.Succes, message = result.Message });
+            }
+            return Json(new { success = checkUser.Succes, message = checkUser.Message });
+        }
+        //Active User
+        public async Task<IActionResult> ActiveUser(int userId)
+        {
+            var checkUser = await _musteriService.GetByIdAsync(userId);
+            if (checkUser.Succes)
+            {
+                var result = await _musteriService.MakeStatusActive(userId);
                 if (result.Succes)
                 {
                     return Json(new { success = result.Succes, message = result.Message });
@@ -76,7 +108,6 @@ namespace WebUI.Areas.Admin.Controllers
                 }
             }
             return Json(new { success = false, message = "Günceleme işlemi başarısız." });
-
         }
     }
 }

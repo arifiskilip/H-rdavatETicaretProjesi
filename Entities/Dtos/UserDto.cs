@@ -19,6 +19,8 @@ namespace Entities.Dtos
         public string? Ilce { get; set; }
         public string? Telefon { get; set; }
         public string? Adres { get; set; }
+        public int? IndirimOrani { get; set; }
+        public bool? Durum { get; set; }
         public DateTime? CreateDate { get; set; } 
     }
 }

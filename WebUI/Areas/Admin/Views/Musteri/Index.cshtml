@@ -4,6 +4,33 @@
     TempData["Title"] = "Müşteriler";
 }
 <div class="card m-5">
+    <div id="confirmationDiscount" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container row">
+                        <div class="col-md-8">
+                            <label>İndirim Oranı : </label>
+
+                            <input type="number" min="0" class="discount" />
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                    <button class="btn btn-success modalGuncelleButton">Güncelle</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -50,12 +77,31 @@
             </div>
         </div>
     </div>
+    <div id="userActiveModule" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">İşlem Onayı</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Aktif etmek istediğinizden emin misiniz?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                    <a id="activeLink" href="#" class="btn btn-success">Aktif Et</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card-body">
         <div class="datatable">
             <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th><p>Id</p></th>
+                        <th>Durum</th>
                         <th>Müşteri Adı</th>
                         <th>Firma Adı</th>
                         <th>Resim</th>
@@ -64,6 +110,7 @@
                         <th>Telefon</th>
                         <th>Adres</th>
                         <th>Sisteme Kayıt Tarihi</th>
+                        <th>İndirim</th>
                         <th>Detay</th>
                         <th></th>
                     </tr>
@@ -74,7 +121,16 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>
+                                    @if (item.Durum == true)
+                                    {
+                                        <div class="badge badge-primary badge-pill">Aktif</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="badge badge-danger badge-pill">Pasif</div>
+                                    }
+                                </td>
                                 <td>@item.Ad @item.Soyad</td>
                                 <td>@item.FirmaAd</td>
                                 <td><img src="@item.Resim" style="border-radius:50px; height:100px; width:100px; border:1px solid #999;" /></td>
@@ -101,16 +157,25 @@
                                 <td>@item.Telefon </td>
                                 <td>@item.Adres</td>
                                 <td>@item.CreateDate</td>
+                                <td>@item.IndirimOrani</td>
                                 <td>
                                     <a href="/Admin/Musteri/SiparisDetay/@item.Id">
                                         <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-info-circle" aria-hidden="true" title="Sipariş Detay"></i></button>
                                     </a>
+                                    <button class="indirimEkle btn btn-datatable btn-icon btn-transparent-dark mr-2" data-user-id="@item.Id"><i class="fa fa-tag" aria-hidden="true" title="İndirim Uygula"></i></button>
                                 </td>
                                 <td>
 
                                     <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-lock changePassword" data-id="@item.Id" aria-hidden="true" title="Şifre Değiştir"></i></button>
 
-                                    <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-remove deleteUser" data-id="@item.Id" aria-hidden="true" title="Kullanıcıyı Sil"></i></button>
+                                    @if (item.Durum == true)
+                                    {
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-remove deleteUser" data-id="@item.Id" aria-hidden="true" title="Pasif Yap"></i></button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class="fa fa-check activeUser" data-id="@item.Id" aria-hidden="true" title="Aktif Yap"></i></button>
+                                    }
 
                                 </td>
                             </tr>
@@ -158,7 +223,7 @@
                                 }
                             });
                         } else {
-                             Swal.fire({
+                            Swal.fire({
                                 title: 'HATA!',
                                 text: data.message,
                                 icon: 'error',
@@ -222,6 +287,99 @@
                 });
 
                 $("#userDeleteModule").modal("hide"); // Modalı kapat
+            });
+        });
+        $(".activeUser").click(function () {
+            var userId = $(this).data("id");
+            $("#userActiveModule").modal("show");
+            $("#activeLink").off("click").on("click", function () {
+                $.ajax({
+                    url: "/Admin/Musteri/ActiveUser", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        userId: userId,
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+
+                $("#userDeleteModule").modal("hide"); // Modalı kapat
+            });
+        });
+        $(".indirimEkle").click(function () {
+            var userId = $(this).data("user-id");
+            $("#confirmationDiscount").modal("show"); // Modalı görüntüle
+
+            $(".modalGuncelleButton").off("click").on("click", function () {
+                var discount = $("#confirmationDiscount .discount").val();
+                $.ajax({
+                    url: "/Admin/Musteri/DiscountAdd", // Urun güncelleme Action metodunun URL'si
+                    type: "POST",
+                    data: {
+                        userId: userId,
+                        discount: discount
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload(); // Sayfayı yeniden yükle
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'HATA!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'HATA!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+
+                $("#confirmationModal").modal("hide"); // Modalı kapat
             });
         });
     });

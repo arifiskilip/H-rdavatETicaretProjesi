@@ -19,6 +19,7 @@ namespace Entities.Concrete
         public int? KutuAdet { get; set; }
         public int? Stok { get; set; }
         public DateTime? CreateDate { get; set; } = DateTime.Now;
+        public bool? Durum { get; set; }
 
         public Marka Marka { get; set; }
         public Kategori Kategori { get; set; }

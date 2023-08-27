@@ -34,9 +34,11 @@ namespace DataAccess.Concrete
                                  Adres = u.Adres,
                                  FirmaAd = u.FirmaAd,
                                  Resim = u.Resim,
+                                 IndirimOrani = u.IndirimOrani,
                                  Telefon = u.Telefon,
                                  IlceId = u.IlceId,
                                  IlId = u.IlId,
+                                 Durum = u.Durum,
                                  CreateDate = u.CreateDate
                              };
                 return result.ToList();

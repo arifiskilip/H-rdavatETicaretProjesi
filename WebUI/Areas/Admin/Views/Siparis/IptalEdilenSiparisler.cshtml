@@ -45,17 +45,17 @@
                                 <td>@item.Indirim</td>
                                 <td>@item.FaturaTutari ₺</td>
                                 <td>
-                                    @if (item.DurumId == (int)SiparisDurumEnum.Yolda)
+                                    @if (item.DurumId == (int)SiparisDurumEnum.Hazırlanıyor)
                                     {
-                                        <text><div class="badge badge-warning badge-pill">Yolda</div></text>
+                                        <text><div class="badge badge-warning badge-pill">Hazırlanıyor</div></text>
                                     }
                                     else if (item.DurumId == (int)SiparisDurumEnum.Tamamlandi)
                                     {
-                                        <text><div class="badge badge-primary badge-pill">Tamamlandı</div></text>
+                                        <text><div class="badge badge-primary badge-pill">Sipariş Onaylandı</div></text>
                                     }
                                     else
                                     {
-                                        <text><div class="badge badge-danger badge-pill">İptal</div></text>
+                                        <text><div class="badge badge-danger badge-pill">Sipariş İptal Edildi</div></text>
                                     }
                                 </td>
                                 <td>

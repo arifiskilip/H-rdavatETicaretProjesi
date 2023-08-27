@@ -26,6 +26,10 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<Musteri>("Lütfen bilgilerinizi kontrol edin.");
             }
+            if (userToCheck.Durum == false)
+            {
+                return new ErrorDataResult<Musteri>("Sisteme giriş yapabilmek için lütfen yetkili firma ile iletişime geçip aktivasyonunuzu onaylatın.");
+            }
             if (userToCheck.Telefon == musteri.Telefon && userToCheck.Sifre == musteri.Sifre)
             {
                 return new SuccessDataResult<Musteri>(userToCheck, "Giriş başarılı");

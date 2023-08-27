@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WebUI.Areas.Member.Controllers
 {
     [Area("Member")]
-  
+    [Authorize(Roles = "Member")]
     public class UrunController : Controller
     {
         

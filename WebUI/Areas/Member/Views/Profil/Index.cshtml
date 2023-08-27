@@ -44,37 +44,41 @@
                             <label class="small mb-1"  for="inputFirstName">Firma Adı</label>
                             <input class="form-control" asp-for="FirmaAd" id="inputFirstName" type="text" placeholder="">
                         </div>
-                        <!-- Form Group (last name)-->
                         <div class="form-group col-md-6">
-                            <label class="small mb-1"  for="inputLastName">İsim</label>
-                            <input class="form-control" asp-for="Ad" id="inputLastName" type="text" placeholder="">
+                            <label class="small mb-1" for="inputPhone">Telefon Numarası</label>
+                            <input class="form-control" asp-for="Telefon" id="inputPhone" type="tel" placeholder="555-123-4567">
                         </div>
+                        <!-- Form Group (last name)-->
+                      
                     </div>
                     <!-- Form Row        -->
                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="small mb-1" for="inputLastName">İsim</label>
+                            <input class="form-control" asp-for="Ad" id="inputLastName" type="text" placeholder="">
+                        </div>
                         <!-- Form Group (organization name)-->
                         <!-- Form Group (location)-->
                         <div class="form-group col-md-6">
                             <label class="small mb-1"  for="inputLocation">Soyisim</label>
                             <input class="form-control" asp-for="Soyad" id="inputLocation" type="text" placeholder="">
                         </div>
+                     
+                      
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="small mb-1" for="Kategori">İl</label>
                             @Html.DropDownList("IlId", ViewBag.Iller as SelectList, "Seçiniz", new { @class = "form-control",@style="display:flex;text-align: initial; padding-top: 9px;" })
                         </div>
-                    </div>
-
-                    <div class="form-row">
                         <!-- Form Group (first name)-->
                         <div class="form-group col-md-6" id="ilceDiv" style="display:none;">
                             <label class="small mb-1 " for="inputEmailAddress">İlçe</label>
                             <select id="IlceId" asp-for="IlceId" name="IlceId" class="form-control" style=" display:flex;text-align: initial; padding-top: 9px;"></select>
                         </div>
                         <!-- Form Group (last name)-->
-                        <div class="form-group col-md-6">
-                            <label class="small mb-1" for="inputPhone">Telefon Numarası</label>
-                            <input class="form-control" asp-for="Telefon" id="inputPhone" type="tel" placeholder="555-123-4567">
-                        </div>
+                       
                         <div class="form-group col-md-12">
                             <label class="small mb-1" for="inputFirstName">Adres</label>
                             <input class="form-control" asp-for="Adres" id="inputFirstName" type="text" placeholder="">

@@ -18,6 +18,8 @@ namespace Entities.Concrete
         public string? Adres { get; set; }
         public string? Sifre { get; set; }
         public DateTime? CreateDate { get; set; }=DateTime.Now;
+        public int? IndirimOrani { get; set; }
+        public bool? Durum { get; set; }
 
         public List<Sepet> Sepets { get; set; }
         public List<Siparis> Siparis { get; set; }

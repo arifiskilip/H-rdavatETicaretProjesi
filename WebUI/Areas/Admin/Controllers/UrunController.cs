@@ -2,6 +2,7 @@
 using Business.Utilities.Helpers;
 using DataAccess.Contexts;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,7 @@ using WebUI.Areas.Admin.Models;
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UrunController : Controller
     {
         private readonly IUrunService _urunService;
@@ -72,6 +74,7 @@ namespace WebUI.Areas.Admin.Controllers
                     Iskonto2 = model.Iskonto2,
                     Iskonto3 = model.Iskonto3,
                     KategoriId = model.KategoriId,
+                    Durum = true,
                     Kod = model.Kod,
                     KutuAdet = Convert.ToInt32(model.KutuAdet),
                     Stok = Convert.ToInt32(model.Stok),
@@ -156,8 +159,7 @@ namespace WebUI.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Sil(int id)
         {
-            var deletedEntity = await _urunService.DeleteAsync(id);
-            DeleteAllProductImagesByProductId(id);
+            var deletedEntity = await _urunService.MakeStatusPassive(id);
             if (deletedEntity.Succes)
             {
                 TempData["Message"] = deletedEntity.Message;

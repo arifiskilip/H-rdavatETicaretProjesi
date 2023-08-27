@@ -11,10 +11,12 @@ using System.Linq;
 using System;
 using Microsoft.VisualBasic;
 using Entities.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SiparisController : Controller
     {
         private readonly ISiparisService _siparisService;
@@ -110,8 +112,8 @@ namespace WebUI.Areas.Admin.Controllers
                         {
                             totalPrice += (double)item.Fiyat;
                         }
-                        order.Data.ToplamFiyat = totalPrice;
-                        order.Data.FaturaTutari = totalPrice;
+                        order.Data.ToplamFiyat = (totalPrice-(totalPrice*order.Data.Indirim / 100));
+                        order.Data.FaturaTutari = (totalPrice - (totalPrice * order.Data.Indirim / 100));
                         await _siparisService.UpdateAsync(order.Data);
                         return Json(new { success = true, message = "Güncelleme işlemi başarılı." });
 
@@ -207,6 +209,13 @@ namespace WebUI.Areas.Admin.Controllers
                 
             }
         }
+
+        //
+        //[HttpPost]
+        //public async Task<IActionResult> SendRequestedQuantity()
+        //{
+
+        //}
         //Sipariş Onayla
         [HttpPost]
         public async Task<IActionResult> ConfirmOrder(int orderId)

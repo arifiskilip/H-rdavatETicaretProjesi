@@ -55,9 +55,10 @@
                                     <tr>
                                         <th class="darkcolor">Ürün</th>
                                         <th class="darkcolor">Fiyat</th>
-                                        <th class="darkcolor">Adet</th>
+                                        <th class="darkcolor">Miktar</th>
+                                        <th class="darkcolor">Kutu Adet</th>
+                                        <th class="darkcolor">Toplam Adet</th>
                                         <th class="darkcolor">Toplam Tutar</th>
-                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -105,6 +106,36 @@
 
                                                 </div>
                                             </td>
+                                            <td class="text-center">
+                                                @if (@item.Urun.KutuAdet != null)
+                                                {
+                                                    <div class="quote text-center mt-1">
+                                                        @item.Urun.KutuAdet
+                                                    </div>
+                                                }
+                                                else{
+                                                      <div class="quote text-center mt-1">
+                                                        1
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (@item.Urun.KutuAdet != null)
+                                                {
+                                                    <div class="quote text-center mt-1">
+                                                        @{
+                                                            var toplamAdet = item.Adet * item.Urun.KutuAdet;
+                                                            <text>@toplamAdet</text>
+                                                        }
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="quote text-center mt-1">
+                                                        @item.Adet
+                                                    </div>
+                                                }
+                                            </td>
                                             <td>
                                                 <h4 class="text-center amount">
                                                     @if (item.Adet > 1)
@@ -118,11 +149,12 @@
                                                     }₺
                                                 </h4>
                                             </td>
-                                            <td class="text-center guncelle-button" data-id="@item.UrunId">
-                                                <a class="btn-close" href="javascript:void(0)"><i class="las la-edit"></i></a>
+                                            <td class="text-center">
+                                                <a class="btn-close guncelle-button" href="javascript:void(0)" data-id="@item.UrunId"><i title="Adet Miktarı Güncelle" class="las la-edit"></i></a>
+                                                <a class="btn-close deleteproduct" href="javascript:void(0)" data-id="@item.Urun.Id"><i title="Sepetten Sil" class="las la-trash"></i></a>
 
                                             </td>
-                                            <td class="text-center deleteproduct" data-id="@item.Urun.Id"><a class="btn-close" href="javascript:void(0)"><i class="las la-trash"></i></a></td>
+                                      
                                         </tr>
                                     }
                                 </tbody>

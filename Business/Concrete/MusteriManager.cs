@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete;
+using DataAccess.Contexts;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using System.Collections.Generic;
@@ -20,6 +22,21 @@ namespace Business.Concrete
             _musteriDal = musteriDal;
         }
 
+        public async Task<IResult> MakeStatusPassive(int id)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var checkEntity = await _musteriDal.GetByIdAsync(id);
+                if (checkEntity != null)
+                {
+                    checkEntity.Durum = false;
+                    await Task.Run(() => { _musteriDal.Update(checkEntity); });
+                    await _uoW.CommitAsync();
+                    return new SuccessResult("İşlem başarılı!");
+                }
+                return new ErrorResult("İşlem başarısız!");
+            }
+        }
         public async Task<IResult> AddAsync(Musteri entity)
         {
             await _musteriDal.AddAsync(entity);
@@ -76,5 +93,20 @@ namespace Business.Concrete
             return new ErrorDataResult<Musteri>("Güncelleme işlemi başarısız!");
         }
 
+        public async Task<IResult> MakeStatusActive(int id)
+        {
+            using (HirdavatContext context = new HirdavatContext())
+            {
+                var checkEntity = await _musteriDal.GetByIdAsync(id);
+                if (checkEntity != null)
+                {
+                    checkEntity.Durum = true;
+                    await Task.Run(() => { _musteriDal.Update(checkEntity); });
+                    await _uoW.CommitAsync();
+                    return new SuccessResult("İşlem başarılı!");
+                }
+                return new ErrorResult("İşlem başarısız!");
+            }
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Areas.Admin.Models;
@@ -9,6 +11,7 @@ using WebUI.Areas.Admin.Models;
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MarkaController : Controller
     {
         private readonly IMarkaService _markaService;
@@ -40,7 +43,8 @@ namespace WebUI.Areas.Admin.Controllers
 				}
                 Marka marka = new()
                 {
-                    Ad = model.Ad,  
+                    Ad = model.Ad,
+                    Durum = true,
                 };
 
                 var addedBrand = await _markaService.AddAsync(marka);
@@ -90,7 +94,7 @@ namespace WebUI.Areas.Admin.Controllers
        
         public async Task<IActionResult> Sil(int id)
         {
-            var deletedEntity = await _markaService.DeleteAsync(id);
+            var deletedEntity = await _markaService.MakeStatusPassive(id);
             if (deletedEntity.Succes)
             {
                 TempData["Message"]= deletedEntity.Message;

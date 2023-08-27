@@ -11,7 +11,7 @@ namespace Business.GenericServiceBase
     {
         Task<IResult> AddAsync(T entity);
         Task<IResult> UpdateAsync(T entity);
-        Task<IResult> DeleteAsync(int id);
+        Task<IResult> DeleteAsync(int id);      
         Task<IDataResult<List<T>>> GetAllAsync();
         Task<IDataResult<T>> GetByIdAsync(int id);
     }

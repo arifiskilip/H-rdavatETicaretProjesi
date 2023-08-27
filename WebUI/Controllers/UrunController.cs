@@ -115,7 +115,7 @@ namespace WebUI.Controllers
             using (HirdavatContext context = new HirdavatContext())
             {
                 var searchResult = context.Urun.Where(u=> u.Ad.Contains(searchTerm) || context.Marka.Any(m=> m.Id == u.MarkaId && m.Ad.Contains(searchTerm)) ||
-                context.Kategori.Any(k => k.Id == u.KategoriId && k.Ad.Contains(searchTerm))).ToList();
+                context.Kategori.Any(k => k.Id == u.KategoriId && k.Ad.Contains(searchTerm))).Where(x=> x.Durum ==true).ToList();
                 IDataResult<List<Urun>> dataResult;
                 if (searchResult.Count>0)
                 {
@@ -176,18 +176,21 @@ namespace WebUI.Controllers
                 {
                     var userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
                     var baskets = _sepetDal.GetItems(userId);
+                    //Configure
+                    var getUser = context.Musteri.FirstOrDefault(x => x.Id == userId);
                     var addedOrder = await context.Siparis.AddAsync(new()
                     {
                         CreateDate = DateTime.Now,
-                        DurumId = (int)SiparisDurumEnum.Yolda,
+                        DurumId = (int)SiparisDurumEnum.Hazırlanıyor,
                         KDVTutar = _sepetDal.CalculateKdv(userId),
                         MusteriId = userId,
                         Tarih = DateTime.Now,
-                        ToplamFiyat = _sepetDal.CalculateTotal(userId),
-                        FaturaTutari = _sepetDal.CalculateTotal(userId),
-                        Indirim = 0,
+                        ToplamFiyat = (_sepetDal.CalculateTotal(userId) - (_sepetDal.CalculateTotal(userId) * getUser.IndirimOrani / 100)),
+                        FaturaTutari = (_sepetDal.CalculateTotal(userId) - (_sepetDal.CalculateTotal(userId) * getUser.IndirimOrani / 100)),
+                        Indirim = getUser.IndirimOrani,
                     });
                     await context.SaveChangesAsync();
+                    
                     foreach (var item in baskets)
                     {
 
@@ -206,6 +209,8 @@ namespace WebUI.Controllers
                     }
                     await context.SaveChangesAsync();
                     _sepetDal.Clear(userId);
+
+
                     return Json(new {success=true,message= "Siparişiniz başarıyla oluşturuldu!" });
                 }
             }

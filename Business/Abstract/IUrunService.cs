@@ -13,5 +13,6 @@ namespace Business.Abstract
         Task<IDataResult<List<Urun>>> ProductsWithBrandIdGet(int brandId);
         IDataResult<UrunDto> GetProductDto(int id);
         IDataResult<List<UrunDto>> GetProductListDto();
+        Task<IResult> MakeStatusPassive(int id);
     }
 }

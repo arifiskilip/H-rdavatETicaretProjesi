@@ -27,7 +27,7 @@ namespace DataAccess.Concrete
                                  on p.KategoriId equals c.Id
                                  join b in context.Marka
                                  on p.MarkaId equals b.Id
-                                 where p.Id == id
+                                 where p.Id == id 
                                  select new UrunDto
                                  {
                                      Id = p.Id,
@@ -65,6 +65,7 @@ namespace DataAccess.Concrete
                              on p.KategoriId equals c.Id
                              join b in context.Marka
                              on p.MarkaId equals b.Id
+                             where p.Durum == true
                              select new UrunDto
                              {
                                  Id = p.Id,

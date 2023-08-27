@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using WebUI.Areas.Admin.Models;
 namespace WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles ="Admin")]
     public class KategoriController : Controller
     {
         private readonly IKategoriService _kategoriService;
@@ -37,9 +39,10 @@ namespace WebUI.Areas.Admin.Controllers
 					ModelState.AddModelError("", $"{model.Ad} zaten kullanılıyor.");
 					return View(model);
 				}
-				Kategori category = new()
+                Kategori category = new()
                 {
                     Ad = model.Ad,
+                    Durum = true,
                 };
 
                 var addedCategory = await _kategoriService.AddAsync(category);
@@ -88,7 +91,7 @@ namespace WebUI.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Sil(int id)
         {
-            var deletedEntity = await _kategoriService.DeleteAsync(id);
+            var deletedEntity = await _kategoriService.MakeStatusPassive(id);
             if (deletedEntity.Succes)
             {
                 TempData["Message"] = deletedEntity.Message;

@@ -3,9 +3,11 @@ using Business.Utilities.Helpers;
 using Business.Utilities.Results;
 using DataAccess.Contexts;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ using WebUI.Areas.Member.Models;
 namespace WebUI.Areas.Member.Controllers
 {
     [Area("Member")]
+    [Authorize(Roles = "Member")]
     public class ProfilController : Controller
     {
         private readonly IIlceService _ılceService;

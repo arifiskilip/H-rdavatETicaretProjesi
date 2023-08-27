@@ -4,6 +4,6 @@
     {
         Tamamlandi =1,
         İptalEdildi=2,
-        Yolda=3
+        Hazırlanıyor=3
     }
 }
